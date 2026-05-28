@@ -4,6 +4,10 @@ A Streamlit-based data analysis assistant that automatically analyzes uploaded C
 detects data quality issues, generates visualizations, suggests suitable machine learning
 tasks, and creates a downloadable Markdown report.
 
+## Live Demo
+
+[Open the Streamlit App](https://data-analysis-report-agent.streamlit.app)
+
 ## Project Overview
 
 Data Analysis Report Agent is designed to help users quickly understand a dataset without
