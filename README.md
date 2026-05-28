@@ -59,7 +59,8 @@ data-analysis-report-agent/
 ├── CHANGELOG.md
 ├── README.md
 ├── .gitignore
-└── venv/
+└── assets/
+    └── screenshots/
 ```
 
 ## How to Run the Project
@@ -67,7 +68,7 @@ data-analysis-report-agent/
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/Lovis-Ghost/data-analysis-report-agent.git
 cd data-analysis-report-agent
 ```
 
@@ -126,6 +127,6 @@ The current version supports automatic dataset analysis, smart column detection,
 
 ## Author
 
-Chen Hongyu
-Master of Artificial Intelligence
+Chen Hongyu  
+Master of Artificial Intelligence  
 Universiti Kebangsaan Malaysia
