@@ -1,13 +1,20 @@
 # Data Analysis Report Agent
 
-A Streamlit-based data analysis assistant that automatically analyzes uploaded CSV datasets, detects data quality issues, generates visualizations, suggests suitable machine learning tasks, and creates a downloadable Markdown report.
+A Streamlit-based data analysis assistant that automatically analyzes uploaded CSV datasets,
+detects data quality issues, generates visualizations, suggests suitable machine learning
+tasks, and creates a downloadable Markdown report.
 
 ## Project Overview
 
-Data Analysis Report Agent is designed to help users quickly understand a dataset without manually writing repeated exploratory data analysis code.
-Users can upload a CSV file, and the application will automatically generate dataset summaries, missing value checks, duplicate row checks, descriptive statistics, visualizations, and machine learning task suggestions.
+Data Analysis Report Agent is designed to help users quickly understand a dataset without
+manually writing repeated exploratory data analysis code.
 
-This project demonstrates practical skills in Python, data analysis automation, Streamlit web development, and basic AI-agent-style workflow design.
+Users can upload a CSV file, and the application will automatically generate dataset
+summaries, missing value checks, duplicate row checks, descriptive statistics,
+visualizations, and machine learning task suggestions.
+
+This project demonstrates practical skills in Python, data analysis automation, Streamlit
+web development, and basic AI-agent-style workflow design.
 
 ## Demo Screenshots
 
@@ -93,7 +100,8 @@ streamlit run app.py
 
 ## Example Use Case
 
-For a customer churn dataset, the agent can automatically detect that the target column `Churn` is suitable for a binary classification task.
+For a customer churn dataset, the agent can automatically detect that the target column
+`Churn` is suitable for a binary classification task.
 
 It then suggests possible models such as:
 
@@ -114,7 +122,8 @@ It also recommends suitable evaluation metrics such as:
 
 ### V1.2 - Machine Learning Task Suggestion
 
-The current version supports automatic dataset analysis, smart column detection, visualizations, Markdown report generation, and machine learning task suggestion.
+The current version supports automatic dataset analysis, smart column detection,
+visualizations, Markdown report generation, and machine learning task suggestion.
 
 ## Future Improvements
 
