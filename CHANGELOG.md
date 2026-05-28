@@ -1,5 +1,17 @@
 # Changelog
 
+## V1.3 - Smart Insights and Enhanced Report
+
+### Added
+- Added a data quality score based on missing values, duplicate rows, and ID-like columns.
+- Added automatic data quality suggestions for beginner-friendly cleaning guidance.
+- Added correlation matrix analysis and a simple heatmap for suitable numerical columns.
+- Added top 3 strongest correlation summary.
+- Improved the downloaded Markdown report with data quality, machine learning, and correlation insights.
+
+### Fixed
+- Fixed the target-column edge case so the app does not use `task_info` when no suitable target column exists.
+
 ## V1.2 - Machine Learning Task Suggestion
 
 ### Added

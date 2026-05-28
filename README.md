@@ -40,18 +40,21 @@ web development, and basic AI-agent-style workflow design.
 * Preview dataset records
 * Display dataset shape and column information
 * Check missing values and duplicate rows
+* Calculate a data quality score
+* Give automatic data cleaning suggestions
 * Automatically detect numerical, categorical, and ID-like columns
 * Exclude ID-like columns from unsuitable visualizations
 * Treat binary numerical columns as categorical features
 * Generate numerical column visualizations
 * Generate categorical column visualizations
+* Show correlation analysis for suitable numerical columns
 * Suggest suitable machine learning task types:
 
   * Regression
   * Binary classification
   * Multi-class classification
 * Recommend suitable machine learning models and evaluation metrics
-* Generate and download a Markdown data analysis report
+* Generate and download an improved Markdown data analysis report
 
 ## Tech Stack
 
@@ -124,15 +127,14 @@ It also recommends suitable evaluation metrics such as:
 
 ## Current Version
 
-### V1.2 - Machine Learning Task Suggestion
+### V1.3 - Smart Insights and Enhanced Report
 
-The current version supports automatic dataset analysis, smart column detection,
-visualizations, Markdown report generation, and machine learning task suggestion.
+The current version supports automatic dataset analysis, smart column detection, data
+quality assessment, correlation analysis, machine learning task suggestion, and an
+improved Markdown report.
 
 ## Future Improvements
 
-* Add automatic data cleaning suggestions
-* Add correlation analysis
 * Add model training for baseline classification and regression models
 * Add PDF or Word report export
 * Add LLM-generated natural language insights
