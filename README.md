@@ -1,9 +1,10 @@
 # Data Analysis Report Agent
 
-A Streamlit-based data analysis assistant that automatically analyzes uploaded CSV datasets,
-detects data quality issues, generates visualizations, suggests suitable machine learning
-tasks, creates a downloadable Markdown report, and can optionally generate AI-assisted
-insights using OpenAI or Gemini with a compact dataset summary.
+A Streamlit-based data analysis assistant that automatically analyzes uploaded CSV or
+Excel `.xlsx` datasets, detects data quality issues, generates visualizations, suggests
+suitable machine learning tasks, creates a downloadable Markdown report, and can
+optionally generate AI-assisted insights using OpenAI or Gemini with a compact dataset
+summary.
 
 ## Live Demo
 
@@ -14,9 +15,9 @@ insights using OpenAI or Gemini with a compact dataset summary.
 Data Analysis Report Agent is designed to help users quickly understand a dataset without
 manually writing repeated exploratory data analysis code.
 
-Users can upload a CSV file, and the application will automatically generate dataset
-summaries, missing value checks, duplicate row checks, descriptive statistics,
-visualizations, and machine learning task suggestions.
+Users can upload a CSV or Excel `.xlsx` file, and the application will automatically
+generate dataset summaries, missing value checks, duplicate row checks, descriptive
+statistics, visualizations, and machine learning task suggestions.
 
 This project demonstrates practical skills in Python, data analysis automation, Streamlit
 web development, and basic AI-agent-style workflow design.
@@ -37,7 +38,8 @@ web development, and basic AI-agent-style workflow design.
 
 ## Features
 
-* Upload CSV files through a web interface
+* Upload CSV or Excel datasets
+* Select Excel sheet for analysis
 * Preview dataset records
 * Display dataset shape and column information
 * Explain the agent-style workflow with tool-like analysis steps
@@ -78,7 +80,7 @@ useful information to the next step, similar to how an AI data analyst agent wou
 
 The workflow includes:
 
-* CSV Reader
+* Dataset Reader
 * Data Type Converter
 * Column Type Detector
 * Data Quality Scorer
@@ -166,12 +168,12 @@ It also recommends suitable evaluation metrics such as:
 
 ## Current Version
 
-### V1.6 - Agent Workflow Explanation
+### V1.7 - CSV and Excel File Support
 
 The current version supports automatic dataset analysis, smart column detection, data
 quality assessment, correlation analysis, machine learning task suggestion, an improved
-Markdown report, optional AI-generated insights with OpenAI or Gemini fallback, and an
-agent workflow explanation that shows the tool-style analysis process.
+Markdown report, optional AI-generated insights with OpenAI or Gemini fallback, an agent
+workflow explanation, and CSV or Excel `.xlsx` file uploads.
 
 ## Future Improvements
 

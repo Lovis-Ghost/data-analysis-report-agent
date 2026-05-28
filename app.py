@@ -28,8 +28,8 @@ def get_agent_workflow_steps(api_provider=None):
     return [
         {
             "step": "1. Read Dataset",
-            "tool": "CSV Reader",
-            "description": "Load the uploaded CSV file and convert it into a pandas DataFrame.",
+            "tool": "Dataset Reader",
+            "description": "Load uploaded CSV or Excel files and convert them into a pandas DataFrame.",
             "output": "Raw dataset preview and dataset shape."
         },
         {
@@ -75,6 +75,25 @@ def get_agent_workflow_steps(api_provider=None):
             "output": "Final data analysis report."
         }
     ]
+
+
+def load_dataset(uploaded_file):
+    file_name = uploaded_file.name.lower()
+
+    if file_name.endswith(".csv"):
+        df = pd.read_csv(uploaded_file)
+        return df, "CSV", None
+
+    if file_name.endswith(".xlsx"):
+        excel_file = pd.ExcelFile(uploaded_file)
+        sheet_name = st.selectbox(
+            "Choose an Excel sheet",
+            excel_file.sheet_names
+        )
+        df = pd.read_excel(excel_file, sheet_name=sheet_name)
+        return df, "Excel", sheet_name
+
+    raise ValueError("Unsupported file format. Please upload a CSV or XLSX file.")
 
 
 def prepare_data(df):
@@ -576,11 +595,14 @@ for step_info in get_agent_workflow_steps():
         st.write(f"**Description:** {step_info['description']}")
         st.write(f"**Output:** {step_info['output']}")
 
-uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
+uploaded_file = st.file_uploader(
+    "Upload your dataset file",
+    type=["csv", "xlsx"]
+)
 
 if uploaded_file is not None:
     try:
-        df = pd.read_csv(uploaded_file)
+        df, file_type, sheet_name = load_dataset(uploaded_file)
         df = prepare_data(df)
 
         file_signature = f"{uploaded_file.name}-{df.shape}-{list(df.columns)}"
@@ -588,7 +610,10 @@ if uploaded_file is not None:
             st.session_state["ai_file_signature"] = file_signature
             st.session_state["ai_insights"] = None
 
-        st.success("CSV file uploaded successfully!")
+        st.success(f"{file_type} file uploaded successfully!")
+
+        if sheet_name:
+            st.info(f"Selected Excel sheet: {sheet_name}")
 
         st.subheader("1. Dataset Preview")
         st.dataframe(df.head())

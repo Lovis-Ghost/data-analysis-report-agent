@@ -5,3 +5,4 @@ tabulate
 openai
 python-dotenv
 google-genai
+openpyxl

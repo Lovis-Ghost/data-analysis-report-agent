@@ -1,5 +1,16 @@
 # Changelog
 
+## V1.7 - CSV and Excel File Support
+
+### Added
+- Added support for Excel `.xlsx` file uploads.
+- Added Excel sheet selection before analysis.
+- Added dataset file type display in the Streamlit app.
+- Added `openpyxl` dependency for Excel reading.
+
+### Changed
+- Updated the dataset reader workflow from CSV-only to CSV/Excel support.
+
 ## V1.6 - Agent Workflow Explanation
 
 ### Added
