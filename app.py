@@ -24,6 +24,59 @@ def get_gemini_api_key():
         return os.getenv("GEMINI_API_KEY")
 
 
+def get_agent_workflow_steps(api_provider=None):
+    return [
+        {
+            "step": "1. Read Dataset",
+            "tool": "CSV Reader",
+            "description": "Load the uploaded CSV file and convert it into a pandas DataFrame.",
+            "output": "Raw dataset preview and dataset shape."
+        },
+        {
+            "step": "2. Prepare Data",
+            "tool": "Data Type Converter",
+            "description": "Detect numeric-like text columns and convert them into numerical values when appropriate.",
+            "output": "Cleaned dataset for analysis."
+        },
+        {
+            "step": "3. Detect Column Types",
+            "tool": "Column Type Detector",
+            "description": "Identify numerical, categorical, and ID-like columns.",
+            "output": "Feature groups used for visualization and modeling suggestions."
+        },
+        {
+            "step": "4. Assess Data Quality",
+            "tool": "Data Quality Scorer",
+            "description": "Check missing values, duplicate rows, and ID-like columns to calculate a data quality score.",
+            "output": "Data quality score and cleaning suggestions."
+        },
+        {
+            "step": "5. Analyze Correlations",
+            "tool": "Correlation Analyzer",
+            "description": "Calculate pairwise correlations between suitable numerical columns.",
+            "output": "Correlation matrix and top strongest correlations."
+        },
+        {
+            "step": "6. Suggest ML Task",
+            "tool": "ML Task Recommender",
+            "description": "Use the selected target column to suggest regression, binary classification, or multi-class classification.",
+            "output": "Recommended task type, models, and evaluation metrics."
+        },
+        {
+            "step": "7. Generate AI Insights",
+            "tool": "LLM Insight Generator",
+            "description": "Send only a compact dataset summary to the configured LLM provider. OpenAI is tried first, and Gemini is used as fallback.",
+            "output": f"AI-generated insight report using {api_provider or 'OpenAI/Gemini fallback'}."
+        },
+        {
+            "step": "8. Generate Report",
+            "tool": "Markdown Report Generator",
+            "description": "Combine rule-based analysis and optional AI insights into a downloadable Markdown report.",
+            "output": "Final data analysis report."
+        }
+    ]
+
+
 def prepare_data(df):
     df = df.copy()
 
@@ -509,6 +562,19 @@ st.write(
     "Upload a CSV file, and this agent will automatically analyze the dataset "
     "and generate a simple data analysis report."
 )
+
+st.subheader("Agent Workflow")
+st.write(
+    "This project follows an agent-style workflow. Each step acts like a tool "
+    "that processes the dataset and passes useful information to the next step."
+)
+st.markdown("CSV Upload → Data Profiling → Quality Check → ML Suggestion → LLM Insights → Report")
+
+for step_info in get_agent_workflow_steps():
+    with st.expander(step_info["step"]):
+        st.write(f"**Tool:** {step_info['tool']}")
+        st.write(f"**Description:** {step_info['description']}")
+        st.write(f"**Output:** {step_info['output']}")
 
 uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
 

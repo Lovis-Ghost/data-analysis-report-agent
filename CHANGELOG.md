@@ -1,5 +1,13 @@
 # Changelog
 
+## V1.6 - Agent Workflow Explanation
+
+### Added
+- Added an Agent Workflow section to the Streamlit app.
+- Added tool-style explanation of each analysis step.
+- Added README documentation for the agent-style workflow.
+- Improved project presentation for AI agent internship portfolio use.
+
 ## V1.5 - Multi-provider LLM Fallback
 
 ### Added

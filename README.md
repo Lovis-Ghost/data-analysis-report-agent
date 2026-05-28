@@ -40,6 +40,7 @@ web development, and basic AI-agent-style workflow design.
 * Upload CSV files through a web interface
 * Preview dataset records
 * Display dataset shape and column information
+* Explain the agent-style workflow with tool-like analysis steps
 * Check missing values and duplicate rows
 * Calculate a data quality score
 * Give automatic data cleaning suggestions
@@ -69,6 +70,22 @@ web development, and basic AI-agent-style workflow design.
 * OpenAI API
 * Gemini API
 * python-dotenv
+
+## Agent Workflow
+
+The app follows a tool-based analysis workflow. Each step processes the dataset and passes
+useful information to the next step, similar to how an AI data analyst agent would work.
+
+The workflow includes:
+
+* CSV Reader
+* Data Type Converter
+* Column Type Detector
+* Data Quality Scorer
+* Correlation Analyzer
+* ML Task Recommender
+* LLM Insight Generator
+* Markdown Report Generator
 
 ## Project Structure
 
@@ -149,18 +166,17 @@ It also recommends suitable evaluation metrics such as:
 
 ## Current Version
 
-### V1.5 - Multi-provider LLM Fallback
+### V1.6 - Agent Workflow Explanation
 
 The current version supports automatic dataset analysis, smart column detection, data
 quality assessment, correlation analysis, machine learning task suggestion, an improved
-Markdown report, and optional AI-generated insights with OpenAI or Gemini fallback using a
-compact dataset summary.
+Markdown report, optional AI-generated insights with OpenAI or Gemini fallback, and an
+agent workflow explanation that shows the tool-style analysis process.
 
 ## Future Improvements
 
 * Add model training for baseline classification and regression models
 * Add PDF or Word report export
-* Add an agent workflow page to explain the reasoning process
 
 ## Author
 
