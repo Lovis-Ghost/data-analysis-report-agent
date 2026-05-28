@@ -627,7 +627,8 @@ if uploaded_file is not None:
             st.pyplot(fig)
 
         st.subheader("11. AI Generated Insights")
-        api_key_available = bool(os.getenv("OPENAI_API_KEY"))
+        api_key = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY", None)
+        api_key_available = bool(api_key)
 
         data_quality_summary = {
             "score": data_quality_score,
