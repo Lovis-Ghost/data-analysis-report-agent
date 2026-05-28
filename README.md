@@ -3,7 +3,7 @@
 A Streamlit-based data analysis assistant that automatically analyzes uploaded CSV datasets,
 detects data quality issues, generates visualizations, suggests suitable machine learning
 tasks, creates a downloadable Markdown report, and can optionally generate AI-assisted
-insights using a compact dataset summary.
+insights using OpenAI or Gemini with a compact dataset summary.
 
 ## Live Demo
 
@@ -49,7 +49,8 @@ web development, and basic AI-agent-style workflow design.
 * Generate numerical column visualizations
 * Generate categorical column visualizations
 * Show correlation analysis for suitable numerical columns
-* Optionally generate AI-assisted insights with OpenAI
+* Optionally generate AI-assisted insights with OpenAI or Gemini
+* Use multi-provider LLM fallback from OpenAI to Gemini
 * Suggest suitable machine learning task types:
 
   * Regression
@@ -66,6 +67,7 @@ web development, and basic AI-agent-style workflow design.
 * matplotlib
 * tabulate
 * OpenAI API
+* Gemini API
 * python-dotenv
 
 ## Project Structure
@@ -105,16 +107,19 @@ pip install -r requirements.txt
 
 ### 4. Optional: enable AI insights
 
-Create a `.env` file or set an environment variable named `OPENAI_API_KEY`.
-If no API key is available, the app still runs normally with the rule-based analysis.
+Create a `.env` file or set environment variables named `OPENAI_API_KEY` and
+`GEMINI_API_KEY`. If no API key is available, the app still runs normally with the
+rule-based analysis.
 
 ```bash
 OPENAI_API_KEY=your_openai_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
-The AI Insight Generator sends only compact summary information, such as column details,
-summary statistics, data quality notes, and machine learning suggestions. It does not send
-the full dataset.
+The AI Insight Generator tries OpenAI first and can fall back to Gemini if OpenAI has a
+quota, billing, or API issue. It sends only compact summary information, such as column
+details, summary statistics, data quality notes, and machine learning suggestions. It does
+not send the full dataset.
 
 ### 5. Run the Streamlit app
 
@@ -144,11 +149,12 @@ It also recommends suitable evaluation metrics such as:
 
 ## Current Version
 
-### V1.4 - AI Insight Generator
+### V1.5 - Multi-provider LLM Fallback
 
 The current version supports automatic dataset analysis, smart column detection, data
 quality assessment, correlation analysis, machine learning task suggestion, an improved
-Markdown report, and optional AI-generated insights using a compact dataset summary.
+Markdown report, and optional AI-generated insights with OpenAI or Gemini fallback using a
+compact dataset summary.
 
 ## Future Improvements
 

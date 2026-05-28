@@ -4,3 +4,4 @@ matplotlib
 tabulate
 openai
 python-dotenv
+google-genai

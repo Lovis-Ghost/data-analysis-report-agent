@@ -5,6 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from dotenv import load_dotenv
 from openai import OpenAI
+from google import genai
 
 
 load_dotenv()
@@ -15,6 +16,13 @@ def get_openai_api_key():
         return os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY", None)
     except Exception:
         return os.getenv("OPENAI_API_KEY")
+
+
+def get_gemini_api_key():
+    try:
+        return os.getenv("GEMINI_API_KEY") or st.secrets.get("GEMINI_API_KEY", None)
+    except Exception:
+        return os.getenv("GEMINI_API_KEY")
 
 
 def prepare_data(df):
@@ -134,14 +142,47 @@ def analyze_correlations(df, numeric_cols):
     }
 
 
-def generate_ai_insights(df, column_info, data_quality_summary, ml_task_info):
-    api_key = get_openai_api_key()
+def generate_openai_insights(prompt, api_key):
+    client = OpenAI(api_key=api_key)
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You generate beginner-friendly data analysis insights "
+                    "from compact dataset summaries."
+                )
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        temperature=0.3,
+        max_tokens=900
+    )
+    return response.choices[0].message.content
 
-    if not api_key:
+
+def generate_gemini_insights(prompt, api_key):
+    client = genai.Client(api_key=api_key)
+    response = client.models.generate_content(
+        model="gemini-3.5-flash",
+        contents=prompt
+    )
+    return response.text
+
+
+def generate_ai_insights(df, column_info, data_quality_summary, ml_task_info):
+    openai_key = get_openai_api_key()
+    gemini_key = get_gemini_api_key()
+
+    if not openai_key and not gemini_key:
         return None, (
-            "AI insights are optional. Add OPENAI_API_KEY to your environment "
-            "to enable the AI Insight Generator."
-        )
+            "AI insights are optional. Add OPENAI_API_KEY or GEMINI_API_KEY "
+            "to your environment to enable the AI Insight Generator."
+        ), None
 
     numeric_cols, categorical_cols, id_cols = detect_column_types(df)
     numeric_summary = {}
@@ -197,29 +238,35 @@ Compact dataset summary:
 {compact_summary}
 """
 
-    try:
-        client = OpenAI(api_key=api_key)
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {
-                    "role": "system",
-                    "content": (
-                        "You generate beginner-friendly data analysis insights "
-                        "from compact dataset summaries."
-                    )
-                },
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
-            temperature=0.3,
-            max_tokens=900
-        )
-        return response.choices[0].message.content, None
-    except Exception as error:
-        return None, f"AI insights could not be generated safely: {error}"
+    openai_error = None
+
+    if openai_key:
+        try:
+            insight_text = generate_openai_insights(prompt, openai_key)
+            return insight_text, None, "OpenAI"
+        except Exception as error:
+            openai_error = str(error)
+
+    if gemini_key:
+        try:
+            insight_text = generate_gemini_insights(prompt, gemini_key)
+            return insight_text, None, "Gemini"
+        except Exception as error:
+            gemini_error = str(error)
+            if openai_error:
+                return None, (
+                    "AI insights could not be generated safely. "
+                    f"OpenAI error: {openai_error}. Gemini error: {gemini_error}"
+                ), None
+            return None, (
+                "AI insights could not be generated safely. "
+                f"Gemini error: {gemini_error}"
+            ), None
+
+    return None, (
+        "OpenAI insights could not be generated, and no Gemini API key is configured. "
+        f"OpenAI error: {openai_error}"
+    ), None
 
 
 st.set_page_config(
@@ -634,8 +681,9 @@ if uploaded_file is not None:
             st.pyplot(fig)
 
         st.subheader("11. AI Generated Insights")
-        api_key = get_openai_api_key()
-        api_key_available = bool(api_key)
+        openai_key = get_openai_api_key()
+        gemini_key = get_gemini_api_key()
+        api_key_available = bool(openai_key or gemini_key)
 
         data_quality_summary = {
             "score": data_quality_score,
@@ -660,13 +708,18 @@ if uploaded_file is not None:
 
         if not api_key_available:
             st.info(
-                "AI insights are optional. Add OPENAI_API_KEY to your environment "
-                "to enable the AI Insight Generator."
+                "AI insights are optional. Add OPENAI_API_KEY or GEMINI_API_KEY "
+                "to your environment to enable the AI Insight Generator."
             )
+
+        st.info(
+            f"OpenAI configured: {'Yes' if openai_key else 'No'}\n\n"
+            f"Gemini configured: {'Yes' if gemini_key else 'No'}"
+        )
 
         if st.button("Generate AI Insights", disabled=not api_key_available):
             with st.spinner("Generating AI insights from the dataset summary..."):
-                ai_insights, ai_error = generate_ai_insights(
+                ai_insights, ai_error, provider_name = generate_ai_insights(
                     df,
                     column_info,
                     data_quality_summary,
@@ -677,7 +730,7 @@ if uploaded_file is not None:
                 st.warning(ai_error)
             else:
                 st.session_state["ai_insights"] = ai_insights
-                st.success("AI insights generated successfully.")
+                st.success(f"AI insights generated successfully using {provider_name}.")
 
         if st.session_state.get("ai_insights"):
             st.markdown(st.session_state["ai_insights"])

@@ -1,5 +1,16 @@
 # Changelog
 
+## V1.5 - Multi-provider LLM Fallback
+
+### Added
+- Added Gemini API support using GEMINI_API_KEY.
+- Added multi-provider LLM fallback from OpenAI to Gemini.
+- Added provider status display in the Streamlit UI.
+- Added safer AI insight generation when one provider has quota or billing issues.
+
+### Changed
+- AI Insight Generator now supports multiple providers instead of only OpenAI.
+
 ## V1.4 - AI Insight Generator
 
 ### Added
