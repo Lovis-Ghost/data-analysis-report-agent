@@ -2,7 +2,8 @@
 
 A Streamlit-based data analysis assistant that automatically analyzes uploaded CSV datasets,
 detects data quality issues, generates visualizations, suggests suitable machine learning
-tasks, and creates a downloadable Markdown report.
+tasks, creates a downloadable Markdown report, and can optionally generate AI-assisted
+insights using a compact dataset summary.
 
 ## Live Demo
 
@@ -48,6 +49,7 @@ web development, and basic AI-agent-style workflow design.
 * Generate numerical column visualizations
 * Generate categorical column visualizations
 * Show correlation analysis for suitable numerical columns
+* Optionally generate AI-assisted insights with OpenAI
 * Suggest suitable machine learning task types:
 
   * Regression
@@ -63,6 +65,8 @@ web development, and basic AI-agent-style workflow design.
 * pandas
 * matplotlib
 * tabulate
+* OpenAI API
+* python-dotenv
 
 ## Project Structure
 
@@ -99,7 +103,20 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Run the Streamlit app
+### 4. Optional: enable AI insights
+
+Create a `.env` file or set an environment variable named `OPENAI_API_KEY`.
+If no API key is available, the app still runs normally with the rule-based analysis.
+
+```bash
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+The AI Insight Generator sends only compact summary information, such as column details,
+summary statistics, data quality notes, and machine learning suggestions. It does not send
+the full dataset.
+
+### 5. Run the Streamlit app
 
 ```bash
 streamlit run app.py
@@ -127,17 +144,16 @@ It also recommends suitable evaluation metrics such as:
 
 ## Current Version
 
-### V1.3 - Smart Insights and Enhanced Report
+### V1.4 - AI Insight Generator
 
 The current version supports automatic dataset analysis, smart column detection, data
-quality assessment, correlation analysis, machine learning task suggestion, and an
-improved Markdown report.
+quality assessment, correlation analysis, machine learning task suggestion, an improved
+Markdown report, and optional AI-generated insights using a compact dataset summary.
 
 ## Future Improvements
 
 * Add model training for baseline classification and regression models
 * Add PDF or Word report export
-* Add LLM-generated natural language insights
 * Add an agent workflow page to explain the reasoning process
 
 ## Author

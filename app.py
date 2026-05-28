@@ -1,6 +1,13 @@
+import os
+
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+from dotenv import load_dotenv
+from openai import OpenAI
+
+
+load_dotenv()
 
 
 def prepare_data(df):
@@ -120,6 +127,94 @@ def analyze_correlations(df, numeric_cols):
     }
 
 
+def generate_ai_insights(df, column_info, data_quality_summary, ml_task_info):
+    api_key = os.getenv("OPENAI_API_KEY")
+
+    if not api_key:
+        return None, (
+            "AI insights are optional. Add OPENAI_API_KEY to your environment "
+            "to enable the AI Insight Generator."
+        )
+
+    numeric_cols, categorical_cols, id_cols = detect_column_types(df)
+    numeric_summary = {}
+    categorical_summary = {}
+
+    if len(numeric_cols) > 0:
+        numeric_summary = (
+            df[numeric_cols[:10]]
+            .describe()
+            .round(3)
+            .to_dict()
+        )
+
+    for col in categorical_cols[:10]:
+        categorical_summary[col] = (
+            df[col]
+            .astype(str)
+            .value_counts()
+            .head(5)
+            .to_dict()
+        )
+
+    compact_summary = {
+        "dataset_shape": {
+            "rows": df.shape[0],
+            "columns": df.shape[1]
+        },
+        "column_information": column_info.head(50).to_dict(orient="records"),
+        "numeric_columns": numeric_cols[:20],
+        "categorical_columns": categorical_cols[:20],
+        "id_like_columns": id_cols[:20],
+        "numeric_summary": numeric_summary,
+        "top_categorical_values": categorical_summary,
+        "data_quality_summary": data_quality_summary,
+        "machine_learning_summary": ml_task_info
+    }
+
+    prompt = f"""
+You are an AI data analysis assistant helping a beginner understand a CSV dataset.
+
+Use only the compact summary below. Do not assume access to the full dataset.
+Write a concise Markdown insight report with these sections:
+
+1. Dataset overview
+2. Data quality insights
+3. Important patterns
+4. Possible machine learning direction
+5. Recommended next steps
+
+Keep the tone clear, practical, and suitable for a student portfolio project.
+
+Compact dataset summary:
+{compact_summary}
+"""
+
+    try:
+        client = OpenAI(api_key=api_key)
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You generate beginner-friendly data analysis insights "
+                        "from compact dataset summaries."
+                    )
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            temperature=0.3,
+            max_tokens=900
+        )
+        return response.choices[0].message.content, None
+    except Exception as error:
+        return None, f"AI insights could not be generated safely: {error}"
+
+
 st.set_page_config(
     page_title="Data Analysis Report Agent",
     page_icon="📊",
@@ -214,7 +309,8 @@ def generate_markdown_report(
     data_quality_suggestions=None,
     selected_target=None,
     task_info=None,
-    correlation_summary=None
+    correlation_summary=None,
+    ai_insights=None
 ):
     rows, cols = df.shape
     missing_values = df.isnull().sum()
@@ -318,13 +414,25 @@ Suggested models:
 
     report += """
 
-## 7. Initial Insights
+## 7. AI Generated Insights
+
+"""
+
+    if ai_insights:
+        report += ai_insights
+        report += "\n"
+    else:
+        report += "AI insights were not generated for this report.\n"
+
+    report += """
+
+## 8. Initial Insights
 
 Based on the automatic analysis, this dataset can be further explored by checking data
 quality, understanding feature distributions, and identifying possible relationships
 between variables.
 
-## 8. Suggested Next Steps
+## 9. Suggested Next Steps
 
 - Handle missing values if necessary.
 - Remove duplicate records if they are not meaningful.
@@ -348,6 +456,11 @@ if uploaded_file is not None:
     try:
         df = pd.read_csv(uploaded_file)
         df = prepare_data(df)
+
+        file_signature = f"{uploaded_file.name}-{df.shape}-{list(df.columns)}"
+        if st.session_state.get("ai_file_signature") != file_signature:
+            st.session_state["ai_file_signature"] = file_signature
+            st.session_state["ai_insights"] = None
 
         st.success("CSV file uploaded successfully!")
 
@@ -513,7 +626,55 @@ if uploaded_file is not None:
             plt.xticks(rotation=45, ha="right")
             st.pyplot(fig)
 
-        st.subheader("11. Generated Report")
+        st.subheader("11. AI Generated Insights")
+        api_key_available = bool(os.getenv("OPENAI_API_KEY"))
+
+        data_quality_summary = {
+            "score": data_quality_score,
+            "suggestions": data_quality_suggestions,
+            "duplicate_rows": int(duplicate_count),
+            "missing_values_by_column": {
+                col: int(value)
+                for col, value in df.isnull().sum().items()
+                if value > 0
+            }
+        }
+
+        ml_task_summary = None
+        if task_info is not None and selected_target is not None:
+            ml_task_summary = {
+                "selected_target": selected_target,
+                "task_type": task_info["task_type"],
+                "reason": task_info["reason"],
+                "suggested_models": task_info["suggested_models"],
+                "suggested_metrics": task_info["suggested_metrics"]
+            }
+
+        if not api_key_available:
+            st.info(
+                "AI insights are optional. Add OPENAI_API_KEY to your environment "
+                "to enable the AI Insight Generator."
+            )
+
+        if st.button("Generate AI Insights", disabled=not api_key_available):
+            with st.spinner("Generating AI insights from the dataset summary..."):
+                ai_insights, ai_error = generate_ai_insights(
+                    df,
+                    column_info,
+                    data_quality_summary,
+                    ml_task_summary
+                )
+
+            if ai_error:
+                st.warning(ai_error)
+            else:
+                st.session_state["ai_insights"] = ai_insights
+                st.success("AI insights generated successfully.")
+
+        if st.session_state.get("ai_insights"):
+            st.markdown(st.session_state["ai_insights"])
+
+        st.subheader("12. Generated Report")
 
         report = generate_markdown_report(
             df,
@@ -521,7 +682,8 @@ if uploaded_file is not None:
             data_quality_suggestions=data_quality_suggestions,
             selected_target=selected_target,
             task_info=task_info,
-            correlation_summary=correlation_summary
+            correlation_summary=correlation_summary,
+            ai_insights=st.session_state.get("ai_insights")
         )
         st.markdown(report)
 

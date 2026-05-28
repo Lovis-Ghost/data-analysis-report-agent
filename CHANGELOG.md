@@ -1,5 +1,19 @@
 # Changelog
 
+## V1.4 - AI Insight Generator
+
+### Added
+- Added optional OpenAI API support through the `OPENAI_API_KEY` environment variable.
+- Added `generate_ai_insights(df, column_info, data_quality_summary, ml_task_info)`.
+- Added an "AI Generated Insights" section with a "Generate AI Insights" button.
+- Added AI-generated dataset overview, data quality insights, patterns, machine learning direction, and next steps.
+- Added AI insights to the downloadable Markdown report when generated.
+- Added `openai` and `python-dotenv` dependencies.
+
+### Changed
+- The AI feature sends compact dataset summaries only, not the full dataset.
+- The app continues to work normally when `OPENAI_API_KEY` is not configured.
+
 ## V1.3 - Smart Insights and Enhanced Report
 
 ### Added
