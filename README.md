@@ -24,17 +24,21 @@ web development, and basic AI-agent-style workflow design.
 
 ## Demo Screenshots
 
-### Dataset Overview
+### Agent Workflow
 
-![Dataset Overview](assets/screenshots/app_overview.png)
+![Agent Workflow](assets/screenshots/agent_workflow.png)
 
-### Machine Learning Task Suggestion
+### Dataset Upload and Preview
 
-![Machine Learning Task Suggestion](assets/screenshots/ml_task_suggestion.png)
+![Dataset Upload and Preview](assets/screenshots/dataset_upload_preview.png)
 
-### Generated Report
+### AI Generated Insights
 
-![Generated Report](assets/screenshots/generated_report.png)
+![AI Generated Insights](assets/screenshots/ai_generated_insights.png)
+
+### Generated Report and Download
+
+![Generated Report and Download](assets/screenshots/generated_report_download.png)
 
 ## Features
 
