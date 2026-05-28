@@ -10,6 +10,13 @@ from openai import OpenAI
 load_dotenv()
 
 
+def get_openai_api_key():
+    try:
+        return os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY", None)
+    except Exception:
+        return os.getenv("OPENAI_API_KEY")
+
+
 def prepare_data(df):
     df = df.copy()
 
@@ -128,7 +135,7 @@ def analyze_correlations(df, numeric_cols):
 
 
 def generate_ai_insights(df, column_info, data_quality_summary, ml_task_info):
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = get_openai_api_key()
 
     if not api_key:
         return None, (
@@ -627,7 +634,7 @@ if uploaded_file is not None:
             st.pyplot(fig)
 
         st.subheader("11. AI Generated Insights")
-        api_key = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY", None)
+        api_key = get_openai_api_key()
         api_key_available = bool(api_key)
 
         data_quality_summary = {
