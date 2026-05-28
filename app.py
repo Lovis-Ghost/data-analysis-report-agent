@@ -5,7 +5,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from dotenv import load_dotenv
 from openai import OpenAI
-from google import genai
 
 
 load_dotenv()
@@ -166,9 +165,16 @@ def generate_openai_insights(prompt, api_key):
 
 
 def generate_gemini_insights(prompt, api_key):
+    try:
+        from google import genai
+    except ImportError:
+        raise ImportError(
+            "google-genai is not installed. Please install it with: pip install google-genai"
+        )
+
     client = genai.Client(api_key=api_key)
     response = client.models.generate_content(
-        model="gemini-3.5-flash",
+        model="gemini-2.5-flash",
         contents=prompt
     )
     return response.text
