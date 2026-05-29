@@ -1,5 +1,14 @@
 # Changelog
 
+## V1.8 - Baseline Model Training
+
+### Added
+- Added baseline ML model training.
+- Added classification and regression model comparison.
+- Added evaluation metrics.
+- Added confusion matrix for classification.
+- Added model training results to Markdown report.
+
 ## V1.7 - CSV and Excel File Support
 
 ### Added

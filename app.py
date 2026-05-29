@@ -3,8 +3,26 @@ import os
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 from dotenv import load_dotenv
 from openai import OpenAI
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    f1_score,
+    mean_absolute_error,
+    mean_squared_error,
+    precision_score,
+    r2_score,
+    recall_score,
+)
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 
 load_dotenv()
@@ -435,6 +453,149 @@ def suggest_ml_task(df, target_col, numeric_cols, categorical_cols, id_cols):
     }
 
 
+def train_baseline_model(df, selected_target, task_info, numeric_cols, categorical_cols, id_cols):
+    df_model = df.copy()
+    df_model = df_model.dropna(subset=[selected_target])
+
+    valid_numeric_features = [
+        col for col in numeric_cols
+        if col in df_model.columns and col != selected_target and col not in id_cols
+    ]
+    valid_categorical_features = [
+        col for col in categorical_cols
+        if col in df_model.columns and col != selected_target and col not in id_cols
+    ]
+    feature_cols = valid_numeric_features + valid_categorical_features
+
+    if len(df_model) < 5:
+        raise ValueError("At least 5 rows with a non-missing target are needed to train a baseline model.")
+
+    if len(feature_cols) == 0:
+        raise ValueError("No valid numerical or categorical feature columns are available for model training.")
+
+    X = df_model[feature_cols]
+    y = df_model[selected_target]
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=0.2,
+        random_state=42
+    )
+
+    numeric_transformer = Pipeline(steps=[
+        ("imputer", SimpleImputer(strategy="median")),
+        ("scaler", StandardScaler())
+    ])
+
+    categorical_transformer = Pipeline(steps=[
+        ("imputer", SimpleImputer(strategy="most_frequent")),
+        ("onehot", OneHotEncoder(handle_unknown="ignore"))
+    ])
+
+    preprocessor = ColumnTransformer(transformers=[
+        ("num", numeric_transformer, valid_numeric_features),
+        ("cat", categorical_transformer, valid_categorical_features)
+    ])
+
+    task_type = task_info["task_type"]
+
+    if task_type in ["Binary Classification", "Multi-class Classification"]:
+        if y_train.nunique() < 2 or y_test.nunique() < 2:
+            raise ValueError(
+                "The train/test split needs at least two target classes in both sets. "
+                "Try using a larger or more balanced dataset."
+            )
+
+        models = {
+            "Logistic Regression": LogisticRegression(max_iter=1000),
+            "Random Forest Classifier": RandomForestClassifier(random_state=42)
+        }
+        comparison_rows = []
+        confusion_matrices = {}
+
+        for model_name, model in models.items():
+            pipeline = Pipeline(steps=[
+                ("preprocessor", preprocessor),
+                ("model", model)
+            ])
+            pipeline.fit(X_train, y_train)
+            predictions = pipeline.predict(X_test)
+
+            comparison_rows.append({
+                "Model": model_name,
+                "Accuracy": accuracy_score(y_test, predictions),
+                "Precision": precision_score(y_test, predictions, average="weighted", zero_division=0),
+                "Recall": recall_score(y_test, predictions, average="weighted", zero_division=0),
+                "F1-score": f1_score(y_test, predictions, average="weighted", zero_division=0)
+            })
+
+            labels = sorted(y.unique(), key=lambda value: str(value))
+            confusion_matrices[model_name] = {
+                "labels": labels,
+                "matrix": confusion_matrix(y_test, predictions, labels=labels).tolist()
+            }
+
+        comparison_df = pd.DataFrame(comparison_rows)
+        best_model_name = comparison_df.sort_values("F1-score", ascending=False).iloc[0]["Model"]
+        interpretation = (
+            f"{best_model_name} performed best because it had the highest weighted F1-score "
+            "among the baseline classification models."
+        )
+
+        return {
+            "task_type": task_type,
+            "target_column": selected_target,
+            "comparison_table": comparison_df,
+            "best_model_name": best_model_name,
+            "best_metric_name": "Weighted F1-score",
+            "interpretation": interpretation,
+            "confusion_matrix": confusion_matrices[best_model_name]
+        }
+
+    if task_type == "Regression":
+        models = {
+            "Linear Regression": LinearRegression(),
+            "Random Forest Regressor": RandomForestRegressor(random_state=42)
+        }
+        comparison_rows = []
+
+        for model_name, model in models.items():
+            pipeline = Pipeline(steps=[
+                ("preprocessor", preprocessor),
+                ("model", model)
+            ])
+            pipeline.fit(X_train, y_train)
+            predictions = pipeline.predict(X_test)
+            mse = mean_squared_error(y_test, predictions)
+
+            comparison_rows.append({
+                "Model": model_name,
+                "MAE": mean_absolute_error(y_test, predictions),
+                "MSE": mse,
+                "RMSE": np.sqrt(mse),
+                "R2 Score": r2_score(y_test, predictions)
+            })
+
+        comparison_df = pd.DataFrame(comparison_rows)
+        best_model_name = comparison_df.sort_values("R2 Score", ascending=False).iloc[0]["Model"]
+        interpretation = (
+            f"{best_model_name} performed best because it had the highest R2 score "
+            "among the baseline regression models."
+        )
+
+        return {
+            "task_type": task_type,
+            "target_column": selected_target,
+            "comparison_table": comparison_df,
+            "best_model_name": best_model_name,
+            "best_metric_name": "R2 Score",
+            "interpretation": interpretation
+        }
+
+    raise ValueError(f"Unsupported task type for baseline training: {task_type}")
+
+
 def generate_markdown_report(
     df,
     data_quality_score=None,
@@ -442,7 +603,8 @@ def generate_markdown_report(
     selected_target=None,
     task_info=None,
     correlation_summary=None,
-    ai_insights=None
+    ai_insights=None,
+    model_results=None
 ):
     rows, cols = df.shape
     missing_values = df.isnull().sum()
@@ -528,7 +690,28 @@ Suggested models:
 
     report += """
 
-## 6. Correlation Analysis
+## 6. Model Training Results
+
+"""
+
+    if model_results:
+        comparison_table = model_results["comparison_table"]
+        report += f"""- Task type: {model_results["task_type"]}
+- Target column: {model_results["target_column"]}
+- Best model: {model_results["best_model_name"]}
+- Best metric: {model_results["best_metric_name"]}
+
+Model comparison:
+
+"""
+        report += comparison_table.to_markdown(index=False)
+        report += f"\n\nInterpretation: {model_results['interpretation']}\n"
+    else:
+        report += "Baseline model training was not performed.\n"
+
+    report += """
+
+## 7. Correlation Analysis
 
 """
 
@@ -546,7 +729,7 @@ Suggested models:
 
     report += """
 
-## 7. AI Generated Insights
+## 8. AI Generated Insights
 
 """
 
@@ -558,13 +741,13 @@ Suggested models:
 
     report += """
 
-## 8. Initial Insights
+## 9. Initial Insights
 
 Based on the automatic analysis, this dataset can be further explored by checking data
 quality, understanding feature distributions, and identifying possible relationships
 between variables.
 
-## 9. Suggested Next Steps
+## 10. Suggested Next Steps
 
 - Handle missing values if necessary.
 - Remove duplicate records if they are not meaningful.
@@ -609,6 +792,7 @@ if uploaded_file is not None:
         if st.session_state.get("ai_file_signature") != file_signature:
             st.session_state["ai_file_signature"] = file_signature
             st.session_state["ai_insights"] = None
+            st.session_state["model_results"] = None
 
         st.success(f"{file_type} file uploaded successfully!")
 
@@ -832,7 +1016,63 @@ if uploaded_file is not None:
         if st.session_state.get("ai_insights"):
             st.markdown(st.session_state["ai_insights"])
 
-        st.subheader("12. Generated Report")
+        st.subheader("12. Baseline Model Training")
+        st.write(
+            "This trains simple baseline models so you can compare a first modeling result. "
+            "It is not a final production model."
+        )
+
+        can_train_model = task_info is not None and selected_target is not None
+
+        if not can_train_model:
+            st.info("Choose a suitable target column before training a baseline model.")
+
+        if st.button("Train Baseline Model", disabled=not can_train_model):
+            with st.spinner("Training baseline models..."):
+                try:
+                    model_results = train_baseline_model(
+                        df,
+                        selected_target,
+                        task_info,
+                        numeric_cols,
+                        categorical_cols,
+                        id_cols
+                    )
+                    st.session_state["model_results"] = model_results
+                    st.success("Baseline model training completed.")
+                except Exception as training_error:
+                    st.session_state["model_results"] = None
+                    st.warning(f"Baseline model training could not be completed: {training_error}")
+
+        model_results = st.session_state.get("model_results")
+        current_model_results = None
+
+        if model_results and model_results["target_column"] == selected_target:
+            current_model_results = model_results
+            st.write("**Model Comparison:**")
+            st.dataframe(model_results["comparison_table"])
+
+            st.write(f"**Best model:** {model_results['best_model_name']}")
+            st.write(model_results["interpretation"])
+
+            if model_results["task_type"] in ["Binary Classification", "Multi-class Classification"]:
+                confusion_info = model_results["confusion_matrix"]
+                confusion_df = pd.DataFrame(
+                    confusion_info["matrix"],
+                    index=confusion_info["labels"],
+                    columns=confusion_info["labels"]
+                )
+                st.write("**Confusion Matrix for Best Model:**")
+                st.dataframe(confusion_df)
+            elif model_results["task_type"] == "Regression":
+                st.info(
+                    f"The best regression baseline was selected using "
+                    f"{model_results['best_metric_name']}."
+                )
+        elif model_results:
+            st.info("Stored model results are for a different target column. Train again to update them.")
+
+        st.subheader("13. Generated Report")
 
         report = generate_markdown_report(
             df,
@@ -841,7 +1081,8 @@ if uploaded_file is not None:
             selected_target=selected_target,
             task_info=task_info,
             correlation_summary=correlation_summary,
-            ai_insights=st.session_state.get("ai_insights")
+            ai_insights=st.session_state.get("ai_insights"),
+            model_results=current_model_results
         )
         st.markdown(report)
 

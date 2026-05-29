@@ -172,17 +172,20 @@ It also recommends suitable evaluation metrics such as:
 
 ## Current Version
 
-### V1.7 - CSV and Excel File Support
+### V1.8 - Baseline Model Training
 
 The current version supports automatic dataset analysis, smart column detection, data
-quality assessment, correlation analysis, machine learning task suggestion, an improved
-Markdown report, optional AI-generated insights with OpenAI or Gemini fallback, an agent
-workflow explanation, and CSV or Excel `.xlsx` file uploads.
+quality assessment, correlation analysis, machine learning task suggestion, baseline
+classification and regression model training, an improved Markdown report, optional
+AI-generated insights with OpenAI or Gemini fallback, an agent workflow explanation,
+and CSV or Excel `.xlsx` file uploads.
 
 ## Future Improvements
 
-* Add model training for baseline classification and regression models
 * Add PDF or Word report export
+* Add model download
+* Add advanced model tuning
+* Add SHAP-based model explanation
 
 ## Author
 
