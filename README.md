@@ -58,6 +58,10 @@ web development, and basic AI-agent-style workflow design.
 * Show correlation analysis for suitable numerical columns
 * Optionally generate AI-assisted insights with OpenAI or Gemini
 * Use multi-provider LLM fallback from OpenAI to Gemini
+* Train baseline classification and regression models
+* Compare baseline model evaluation metrics
+* Show confusion matrix for classification tasks
+* Add model training results to the Markdown report
 * Suggest suitable machine learning task types:
 
   * Regression
@@ -71,7 +75,9 @@ web development, and basic AI-agent-style workflow design.
 * Python
 * Streamlit
 * pandas
+* NumPy
 * matplotlib
+* scikit-learn
 * tabulate
 * OpenAI API
 * Gemini API
@@ -90,6 +96,7 @@ The workflow includes:
 * Data Quality Scorer
 * Correlation Analyzer
 * ML Task Recommender
+* Baseline Model Trainer
 * LLM Insight Generator
 * Markdown Report Generator
 

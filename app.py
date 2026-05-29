@@ -81,13 +81,19 @@ def get_agent_workflow_steps(api_provider=None):
             "output": "Recommended task type, models, and evaluation metrics."
         },
         {
-            "step": "7. Generate AI Insights",
+            "step": "7. Train Baseline Model",
+            "tool": "Baseline Model Trainer",
+            "description": "Train simple baseline classification or regression models using sklearn pipelines.",
+            "output": "Model comparison table, best baseline model, and evaluation metrics."
+        },
+        {
+            "step": "8. Generate AI Insights",
             "tool": "LLM Insight Generator",
             "description": "Send only a compact dataset summary to the configured LLM provider. OpenAI is tried first, and Gemini is used as fallback.",
             "output": f"AI-generated insight report using {api_provider or 'OpenAI/Gemini fallback'}."
         },
         {
-            "step": "8. Generate Report",
+            "step": "9. Generate Report",
             "tool": "Markdown Report Generator",
             "description": "Combine rule-based analysis and optional AI insights into a downloadable Markdown report.",
             "output": "Final data analysis report."
@@ -761,7 +767,7 @@ between variables.
 st.title("📊 Data Analysis Report Agent")
 
 st.write(
-    "Upload a CSV file, and this agent will automatically analyze the dataset "
+    "Upload a CSV or Excel file, and this agent will automatically analyze the dataset "
     "and generate a simple data analysis report."
 )
 
@@ -770,7 +776,10 @@ st.write(
     "This project follows an agent-style workflow. Each step acts like a tool "
     "that processes the dataset and passes useful information to the next step."
 )
-st.markdown("CSV Upload → Data Profiling → Quality Check → ML Suggestion → LLM Insights → Report")
+st.markdown(
+    "CSV/Excel Upload → Data Profiling → Quality Check → ML Suggestion → "
+    "Baseline Training → LLM Insights → Report"
+)
 
 for step_info in get_agent_workflow_steps():
     with st.expander(step_info["step"]):
@@ -1097,4 +1106,4 @@ if uploaded_file is not None:
         st.error("Something went wrong while reading the file.")
         st.write(e)
 else:
-    st.info("Please upload a CSV file to start the analysis.")
+    st.info("Please upload a CSV or Excel file to start the analysis.")

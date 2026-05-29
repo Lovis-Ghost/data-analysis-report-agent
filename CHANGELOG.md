@@ -1,5 +1,12 @@
 # Changelog
 
+## V1.8.1 - Documentation and Workflow Polish
+
+### Changed
+- Updated app text from CSV-only to CSV/Excel wording.
+- Added Baseline Model Trainer to the agent workflow description.
+- Updated README features and tech stack to reflect model training support.
+
 ## V1.8 - Baseline Model Training
 
 ### Added
