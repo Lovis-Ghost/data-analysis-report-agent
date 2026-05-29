@@ -212,6 +212,8 @@ data-analysis-report-agent/
 ├── CHANGELOG.md
 ├── README.md
 ├── .gitignore
+├── docs/
+│   └── technical_design.md
 ├── examples/
 │   ├── README.md
 │   ├── sample_churn.csv
@@ -268,13 +270,17 @@ If no credentials are provided, the app still works normally with rule-based ana
 streamlit run app.py
 ```
 
+## Technical Documentation
+
+`docs/technical_design.md` explains the system design, module responsibilities, data flow, machine learning workflow, report export workflow, and LLM insight workflow.
+
 ## Current Version
 
-### V2.5 - PDF Report Export
+### V2.6A - Public Portfolio Polish
 
 The current version supports automatic dataset analysis, smart column detection, data quality assessment, correlation analysis, machine learning task suggestion, baseline classification and regression model training, model download for the best baseline sklearn Pipeline, a prediction demo using the trained baseline Pipeline, an improved Markdown report, optional AI-generated insights with OpenAI or Gemini fallback, and CSV or Excel uploads.
 
-The project now supports PDF report export in addition to Markdown and Word report export.
+The project now includes public technical design documentation and keeps interview and resume preparation materials outside the public repository.
 
 ## Future Improvements
 

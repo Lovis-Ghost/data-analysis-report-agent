@@ -1,5 +1,15 @@
 # Changelog
 
+## V2.6A - Public Portfolio Polish
+
+### Added
+- Added public technical design documentation.
+- Added a docs folder for public project documentation.
+
+### Changed
+- Updated README with a technical documentation section.
+- Kept private resume and interview preparation materials outside the public repository.
+
 ## V2.5 - PDF Report Export
 
 ### Added
