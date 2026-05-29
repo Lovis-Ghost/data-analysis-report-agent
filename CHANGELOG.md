@@ -1,5 +1,12 @@
 # Changelog
 
+## V2.0.1 - Project Rename and Branding Update
+
+### Changed
+- Renamed the project branding from Data Analysis Report Agent to AI Data Analysis & ML Agent.
+- Updated the Streamlit app title, README title, and Markdown report title.
+- Updated project descriptions to better reflect the V2.0 machine learning and prediction demo features.
+
 ## V2.0 - Prediction Demo
 
 ### Added

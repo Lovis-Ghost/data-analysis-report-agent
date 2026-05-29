@@ -1,10 +1,8 @@
-# Data Analysis Report Agent
+# AI Data Analysis & ML Agent
 
-A Streamlit-based data analysis assistant that automatically analyzes uploaded CSV or
-Excel `.xlsx` datasets, detects data quality issues, generates visualizations, suggests
-suitable machine learning tasks, creates a downloadable Markdown report, and can
-optionally generate AI-assisted insights using OpenAI or Gemini with a compact dataset
-summary.
+A Streamlit-based assistant for CSV and Excel dataset analysis, data quality checks,
+AI-assisted insights, baseline machine learning training, model download, prediction
+demo, and Markdown report generation.
 
 ## Live Demo
 
@@ -12,12 +10,13 @@ summary.
 
 ## Project Overview
 
-Data Analysis Report Agent is designed to help users quickly understand a dataset without
-manually writing repeated exploratory data analysis code.
+AI Data Analysis & ML Agent is designed to help users quickly understand a dataset
+without manually writing repeated exploratory data analysis code.
 
 Users can upload a CSV or Excel `.xlsx` file, and the application will automatically
 generate dataset summaries, missing value checks, duplicate row checks, descriptive
-statistics, visualizations, and machine learning task suggestions.
+statistics, visualizations, machine learning task suggestions, baseline model training,
+model download, prediction demos, and Markdown reports.
 
 This project demonstrates practical skills in Python, data analysis automation, Streamlit
 web development, and basic AI-agent-style workflow design.

@@ -374,7 +374,7 @@ Compact dataset summary:
 
 
 st.set_page_config(
-    page_title="Data Analysis Report Agent",
+    page_title="AI Data Analysis & ML Agent",
     page_icon="📊",
     layout="wide"
 )
@@ -720,7 +720,7 @@ def generate_markdown_report(
     numeric_cols, categorical_cols, id_cols = detect_column_types(df)
 
     report = f"""
-# Data Analysis Report
+# AI Data Analysis & ML Report
 
 ## 1. Dataset Overview
 
@@ -868,11 +868,12 @@ between variables.
     return report
 
 
-st.title("📊 Data Analysis Report Agent")
+st.title("📊 AI Data Analysis & ML Agent")
 
 st.write(
-    "Upload a CSV or Excel file, and this agent will automatically analyze the dataset "
-    "and generate a simple data analysis report."
+    "Upload a CSV or Excel dataset to analyze data quality, generate reports, "
+    "train baseline machine learning models, download the best model, and try "
+    "a simple prediction demo."
 )
 
 st.subheader("Agent Workflow")
