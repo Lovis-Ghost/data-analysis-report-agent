@@ -1,6 +1,6 @@
 # AI Data Analysis & ML Agent
 
-An end-to-end Streamlit application for CSV and Excel dataset analysis, data quality checking, AI-assisted insight generation, baseline machine learning training, model download, prediction demo, and Markdown report generation.
+An end-to-end Streamlit application for CSV and Excel dataset analysis, data quality checking, AI-assisted insight generation, baseline machine learning training, model download, prediction demo, and Markdown/Word/PDF report generation.
 
 ## Live Demo
 
@@ -52,6 +52,7 @@ flowchart TD
     O --> L
     L --> P[Markdown Report]
     L --> Q[Word Report]
+    L --> R[PDF Report]
 ```
 
 ## Demo Screenshots
