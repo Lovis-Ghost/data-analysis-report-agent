@@ -1,5 +1,13 @@
 # Changelog
 
+## V2.1 - Modular Project Structure
+
+### Changed
+- Refactored reusable logic from app.py into separate modules.
+- Added a modules package for data loading, column detection, data quality analysis, correlation analysis, AI insights, ML task suggestion, model training, prediction, workflow description, and report generation.
+- Simplified app.py so it mainly controls the Streamlit UI flow.
+- Updated README project structure for the modular layout.
+
 ## V2.0.2 - README Portfolio Polish
 
 ### Changed
