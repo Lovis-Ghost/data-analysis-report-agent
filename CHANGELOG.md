@@ -1,5 +1,13 @@
 # Changelog
 
+## V1.9 - Model Download
+
+### Added
+- Added download support for the best trained baseline model.
+- Saved preprocessing steps and trained model together as an sklearn Pipeline.
+- Added model metadata including task type, target column, feature columns, and best model name.
+- Added model download availability information to the Markdown report.
+
 ## V1.8.1 - Documentation and Workflow Polish
 
 ### Changed

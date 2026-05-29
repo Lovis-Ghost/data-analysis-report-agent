@@ -1,5 +1,7 @@
+import io
 import os
 
+import joblib
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -505,6 +507,7 @@ def train_baseline_model(df, selected_target, task_info, numeric_cols, categoric
     ])
 
     task_type = task_info["task_type"]
+    safe_target_name = str(selected_target).replace(" ", "_")
 
     if task_type in ["Binary Classification", "Multi-class Classification"]:
         if y_train.nunique() < 2 or y_test.nunique() < 2:
@@ -519,6 +522,7 @@ def train_baseline_model(df, selected_target, task_info, numeric_cols, categoric
         }
         comparison_rows = []
         confusion_matrices = {}
+        trained_pipelines = {}
 
         for model_name, model in models.items():
             pipeline = Pipeline(steps=[
@@ -526,6 +530,7 @@ def train_baseline_model(df, selected_target, task_info, numeric_cols, categoric
                 ("model", model)
             ])
             pipeline.fit(X_train, y_train)
+            trained_pipelines[model_name] = pipeline
             predictions = pipeline.predict(X_test)
 
             comparison_rows.append({
@@ -544,6 +549,7 @@ def train_baseline_model(df, selected_target, task_info, numeric_cols, categoric
 
         comparison_df = pd.DataFrame(comparison_rows)
         best_model_name = comparison_df.sort_values("F1-score", ascending=False).iloc[0]["Model"]
+        safe_model_name = best_model_name.replace(" ", "_")
         interpretation = (
             f"{best_model_name} performed best because it had the highest weighted F1-score "
             "among the baseline classification models."
@@ -554,9 +560,14 @@ def train_baseline_model(df, selected_target, task_info, numeric_cols, categoric
             "target_column": selected_target,
             "comparison_table": comparison_df,
             "best_model_name": best_model_name,
+            "best_pipeline": trained_pipelines[best_model_name],
             "best_metric_name": "Weighted F1-score",
             "interpretation": interpretation,
-            "confusion_matrix": confusion_matrices[best_model_name]
+            "confusion_matrix": confusion_matrices[best_model_name],
+            "feature_columns": feature_cols,
+            "numeric_features": valid_numeric_features,
+            "categorical_features": valid_categorical_features,
+            "model_file_name": f"baseline_model_{safe_target_name}_{safe_model_name}.pkl"
         }
 
     if task_type == "Regression":
@@ -565,6 +576,7 @@ def train_baseline_model(df, selected_target, task_info, numeric_cols, categoric
             "Random Forest Regressor": RandomForestRegressor(random_state=42)
         }
         comparison_rows = []
+        trained_pipelines = {}
 
         for model_name, model in models.items():
             pipeline = Pipeline(steps=[
@@ -572,6 +584,7 @@ def train_baseline_model(df, selected_target, task_info, numeric_cols, categoric
                 ("model", model)
             ])
             pipeline.fit(X_train, y_train)
+            trained_pipelines[model_name] = pipeline
             predictions = pipeline.predict(X_test)
             mse = mean_squared_error(y_test, predictions)
 
@@ -585,6 +598,7 @@ def train_baseline_model(df, selected_target, task_info, numeric_cols, categoric
 
         comparison_df = pd.DataFrame(comparison_rows)
         best_model_name = comparison_df.sort_values("R2 Score", ascending=False).iloc[0]["Model"]
+        safe_model_name = best_model_name.replace(" ", "_")
         interpretation = (
             f"{best_model_name} performed best because it had the highest R2 score "
             "among the baseline regression models."
@@ -595,11 +609,34 @@ def train_baseline_model(df, selected_target, task_info, numeric_cols, categoric
             "target_column": selected_target,
             "comparison_table": comparison_df,
             "best_model_name": best_model_name,
+            "best_pipeline": trained_pipelines[best_model_name],
             "best_metric_name": "R2 Score",
-            "interpretation": interpretation
+            "interpretation": interpretation,
+            "feature_columns": feature_cols,
+            "numeric_features": valid_numeric_features,
+            "categorical_features": valid_categorical_features,
+            "model_file_name": f"baseline_model_{safe_target_name}_{safe_model_name}.pkl"
         }
 
     raise ValueError(f"Unsupported task type for baseline training: {task_type}")
+
+
+def create_model_download_bytes(model_results):
+    buffer = io.BytesIO()
+    model_package = {
+        "model": model_results["best_pipeline"],
+        "task_type": model_results["task_type"],
+        "target_column": model_results["target_column"],
+        "best_model_name": model_results["best_model_name"],
+        "feature_columns": model_results["feature_columns"],
+        "numeric_features": model_results["numeric_features"],
+        "categorical_features": model_results["categorical_features"],
+        "best_metric_name": model_results["best_metric_name"],
+        "interpretation": model_results["interpretation"]
+    }
+    joblib.dump(model_package, buffer)
+    buffer.seek(0)
+    return buffer.getvalue()
 
 
 def generate_markdown_report(
@@ -706,6 +743,7 @@ Suggested models:
 - Target column: {model_results["target_column"]}
 - Best model: {model_results["best_model_name"]}
 - Best metric: {model_results["best_metric_name"]}
+- Model download available: Yes
 
 Model comparison:
 
@@ -713,7 +751,8 @@ Model comparison:
         report += comparison_table.to_markdown(index=False)
         report += f"\n\nInterpretation: {model_results['interpretation']}\n"
     else:
-        report += "Baseline model training was not performed.\n"
+        report += "Baseline model training was not performed.\n\n"
+        report += "- Model download available: No\n"
 
     report += """
 
@@ -1077,6 +1116,18 @@ if uploaded_file is not None:
                 st.info(
                     f"The best regression baseline was selected using "
                     f"{model_results['best_metric_name']}."
+                )
+
+            if current_model_results and "best_pipeline" in current_model_results:
+                st.write(
+                    "The downloaded file contains the best baseline sklearn pipeline, "
+                    "including preprocessing steps and the trained model."
+                )
+                st.download_button(
+                    label="Download Best Baseline Model (.pkl)",
+                    data=create_model_download_bytes(current_model_results),
+                    file_name=current_model_results["model_file_name"],
+                    mime="application/octet-stream"
                 )
         elif model_results:
             st.info("Stored model results are for a different target column. Train again to update them.")

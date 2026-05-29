@@ -62,6 +62,8 @@ web development, and basic AI-agent-style workflow design.
 * Compare baseline model evaluation metrics
 * Show confusion matrix for classification tasks
 * Add model training results to the Markdown report
+* Download the best trained baseline model as a `.pkl` file
+* Save preprocessing steps and trained model together using an sklearn Pipeline
 * Suggest suitable machine learning task types:
 
   * Regression
@@ -179,18 +181,18 @@ It also recommends suitable evaluation metrics such as:
 
 ## Current Version
 
-### V1.8 - Baseline Model Training
+### V1.9 - Model Download
 
 The current version supports automatic dataset analysis, smart column detection, data
 quality assessment, correlation analysis, machine learning task suggestion, baseline
-classification and regression model training, an improved Markdown report, optional
-AI-generated insights with OpenAI or Gemini fallback, an agent workflow explanation,
-and CSV or Excel `.xlsx` file uploads.
+classification and regression model training, model download for the best baseline
+sklearn pipeline, an improved Markdown report, optional AI-generated insights with
+OpenAI or Gemini fallback, an agent workflow explanation, and CSV or Excel `.xlsx`
+file uploads.
 
 ## Future Improvements
 
 * Add PDF or Word report export
-* Add model download
 * Add advanced model tuning
 * Add SHAP-based model explanation
 
