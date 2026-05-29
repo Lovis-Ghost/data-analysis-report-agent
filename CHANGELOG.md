@@ -1,5 +1,16 @@
 # Changelog
 
+## V2.4B - Final Screenshots Added
+
+### Added
+- Added final Streamlit UI screenshots to README.
+- Added screenshots for workflow, dataset preview, data quality, model training, prediction demo, and report download.
+- Updated assets/screenshots documentation.
+
+### Changed
+- Replaced the planned screenshots checklist with real screenshot references.
+- Improved README visual presentation for portfolio review.
+
 ## V2.4A - Architecture Diagram and Screenshot Preparation
 
 ### Added

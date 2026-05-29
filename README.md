@@ -54,6 +54,36 @@ flowchart TD
     L --> Q[Word Report]
 ```
 
+## Demo Screenshots
+
+### Agent Workflow
+
+![Agent Workflow](assets/screenshots/01_agent_workflow.png)
+
+### Dataset Upload and Preview
+
+![Dataset Upload and Preview](assets/screenshots/02_dataset_preview.png)
+
+### Data Quality Assessment
+
+![Data Quality Assessment](assets/screenshots/03_data_quality.png)
+
+### AI-Assisted Insights
+
+![AI-Assisted Insights](assets/screenshots/04_ai_insights.png)
+
+### Baseline Model Training and Model Download
+
+![Baseline Model Training and Model Download](assets/screenshots/05_model_training_and_download.png)
+
+### Prediction Demo
+
+![Prediction Demo](assets/screenshots/07_prediction_demo.png)
+
+### Report Download
+
+![Report Download](assets/screenshots/08_report_download.png)
+
 ## Key Features
 
 ### Data Analysis
@@ -130,19 +160,6 @@ The app follows a tool-based agent workflow. Each component processes part of th
 | LLM Integration | Supports optional OpenAI and Gemini insights |
 | Web App Development | Provides an interactive Streamlit interface and live deployment |
 | Reporting | Generates downloadable Markdown and Word reports |
-
-## Planned Screenshots
-
-Final screenshots will be added after the UI is stable. The planned screenshots are:
-
-- [ ] Agent workflow overview
-- [ ] Dataset upload and preview
-- [ ] Data quality assessment
-- [ ] AI-generated insights
-- [ ] Baseline model training results
-- [ ] Model download
-- [ ] Prediction demo
-- [ ] Markdown and Word report download
 
 ## Tech Stack
 
@@ -251,18 +268,18 @@ streamlit run app.py
 
 ## Current Version
 
-### V2.4A - Architecture Diagram and Screenshot Preparation
+### V2.4B - Final Screenshots Added
 
 The current version supports automatic dataset analysis, smart column detection, data quality assessment, correlation analysis, machine learning task suggestion, baseline classification and regression model training, model download for the best baseline sklearn Pipeline, a prediction demo using the trained baseline Pipeline, an improved Markdown report, optional AI-generated insights with OpenAI or Gemini fallback, and CSV or Excel uploads.
 
-The project now includes a GitHub-rendered Mermaid system architecture diagram and screenshot preparation documentation for final portfolio presentation.
+The project now includes final screenshots in the README for portfolio presentation and replaces screenshot planning notes with real UI screenshots.
 
 ## Future Improvements
 
 - Add PDF report export
 - Add advanced model tuning
 - Add SHAP-based model explanation
-- Add final updated screenshots and example reports
+- Add more example reports
 
 ## Resume-Ready Project Summary
 

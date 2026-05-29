@@ -1,18 +1,17 @@
 # Screenshot Guide
 
-This folder is reserved for final project screenshots.
+Final screenshots have been added for portfolio presentation.
 
-Recommended screenshot names:
+Current screenshot files:
 
-- `01_agent_workflow.png`
-- `02_dataset_preview.png`
-- `03_data_quality.png`
-- `04_ai_insights.png`
-- `05_model_training.png`
-- `06_model_download.png`
-- `07_prediction_demo.png`
-- `08_report_download.png`
+- `01_agent_workflow.png`: Shows the agent workflow overview.
+- `02_dataset_preview.png`: Shows dataset upload and preview.
+- `03_data_quality.png`: Shows data quality assessment.
+- `04_ai_insights.png`: Shows AI-assisted insights.
+- `05_model_training_and_download.png`: Shows baseline model training and model download.
+- `07_prediction_demo.png`: Shows the prediction demo.
+- `08_report_download.png`: Shows Markdown and Word report download.
 
-Screenshots should be added only after final UI testing.
+Screenshots should be updated when the Streamlit UI changes significantly.
 
-After screenshots are added, `README.md` can reference them.
+After screenshots are updated, check that `README.md` still references real files.
