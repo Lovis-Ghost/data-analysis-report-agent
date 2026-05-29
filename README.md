@@ -4,7 +4,7 @@ An end-to-end Streamlit application for CSV and Excel dataset analysis, data qua
 
 ## Live Demo
 
-[Open the Streamlit App](https://data-analysis-report-agent.streamlit.app)
+[Open the Streamlit App](https://ai-data-analysis-ml-agent.streamlit.app)
 
 ## Project Overview
 
@@ -206,7 +206,7 @@ It can then train baseline models, compare evaluation metrics, show a confusion 
 ## Project Structure
 
 ```text
-data-analysis-report-agent/
+ai-data-analysis-ml-agent/
 ├── app.py
 ├── requirements.txt
 ├── CHANGELOG.md
@@ -241,8 +241,8 @@ data-analysis-report-agent/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Lovis-Ghost/data-analysis-report-agent.git
-cd data-analysis-report-agent
+git clone https://github.com/Lovis-Ghost/ai-data-analysis-ml-agent.git
+cd ai-data-analysis-ml-agent
 ```
 
 ### 2. Create and activate a virtual environment

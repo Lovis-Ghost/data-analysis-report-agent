@@ -1,5 +1,13 @@
 # Changelog
 
+## V2.6B - Final Link and Repository Rename
+
+### Changed
+- Updated README links after renaming the repository to ai-data-analysis-ml-agent.
+- Updated Streamlit live demo link.
+- Updated local clone instructions and project folder references.
+- Updated public documentation links to match the final project branding.
+
 ## V2.6A - Public Portfolio Polish
 
 ### Added
