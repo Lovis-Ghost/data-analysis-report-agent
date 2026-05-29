@@ -1,5 +1,14 @@
 # Changelog
 
+## V2.0 - Prediction Demo
+
+### Added
+- Added a prediction demo interface for the best trained baseline model.
+- Added dynamic input fields based on numerical and categorical feature columns.
+- Added single-sample prediction using the trained sklearn Pipeline.
+- Added class probability display when supported by the model.
+- Added prediction demo availability information to the Markdown report.
+
 ## V1.9 - Model Download
 
 ### Added

@@ -639,6 +639,69 @@ def create_model_download_bytes(model_results):
     return buffer.getvalue()
 
 
+def create_prediction_input(df, model_results):
+    feature_columns = model_results["feature_columns"]
+    numeric_features = model_results["numeric_features"]
+    categorical_features = model_results["categorical_features"]
+    input_values = {}
+
+    for col in feature_columns:
+        if col in numeric_features:
+            numeric_values = pd.to_numeric(df[col], errors="coerce")
+            median_value = numeric_values.median()
+
+            if pd.isna(median_value):
+                median_value = 0.0
+
+            input_values[col] = st.number_input(
+                col,
+                value=float(median_value),
+                key=f"prediction_numeric_{col}"
+            )
+
+        elif col in categorical_features:
+            options = (
+                df[col]
+                .dropna()
+                .drop_duplicates()
+                .head(50)
+                .tolist()
+            )
+
+            if len(options) > 0:
+                input_values[col] = st.selectbox(
+                    col,
+                    options,
+                    key=f"prediction_categorical_{col}"
+                )
+            else:
+                input_values[col] = st.text_input(
+                    col,
+                    key=f"prediction_text_{col}"
+                )
+
+    return pd.DataFrame([input_values], columns=feature_columns)
+
+
+def make_single_prediction(model_results, input_df):
+    pipeline = model_results["best_pipeline"]
+    prediction = pipeline.predict(input_df)[0]
+
+    probabilities = None
+    if hasattr(pipeline, "predict_proba"):
+        try:
+            probability_values = pipeline.predict_proba(input_df)[0]
+            class_labels = pipeline.classes_
+            probabilities = pd.DataFrame({
+                "Class": class_labels,
+                "Probability": probability_values
+            })
+        except Exception:
+            probabilities = None
+
+    return prediction, probabilities
+
+
 def generate_markdown_report(
     df,
     data_quality_score=None,
@@ -744,6 +807,7 @@ Suggested models:
 - Best model: {model_results["best_model_name"]}
 - Best metric: {model_results["best_metric_name"]}
 - Model download available: Yes
+- Prediction demo available: Yes
 
 Model comparison:
 
@@ -753,6 +817,7 @@ Model comparison:
     else:
         report += "Baseline model training was not performed.\n\n"
         report += "- Model download available: No\n"
+        report += "- Prediction demo available: No\n"
 
     report += """
 
@@ -1132,7 +1197,37 @@ if uploaded_file is not None:
         elif model_results:
             st.info("Stored model results are for a different target column. Train again to update them.")
 
-        st.subheader("13. Generated Report")
+        st.subheader("13. Prediction Demo")
+
+        if current_model_results and "best_pipeline" in current_model_results:
+            st.write(
+                "This is a simple demo using the best baseline model trained above."
+            )
+
+            prediction_input_df = create_prediction_input(df, current_model_results)
+
+            if st.button("Predict with Best Baseline Model"):
+                try:
+                    prediction, probabilities = make_single_prediction(
+                        current_model_results,
+                        prediction_input_df
+                    )
+                    st.success(f"Predicted value: {prediction}")
+
+                    if probabilities is not None:
+                        st.write("**Class Probabilities:**")
+                        st.dataframe(probabilities)
+
+                    st.info(
+                        "This is a baseline prediction and should not be used as a "
+                        "final production decision."
+                    )
+                except Exception as prediction_error:
+                    st.warning(f"Prediction could not be completed: {prediction_error}")
+        else:
+            st.info("Train a baseline model first to use the prediction demo.")
+
+        st.subheader("14. Generated Report")
 
         report = generate_markdown_report(
             df,
