@@ -50,8 +50,8 @@ def get_agent_workflow_steps(api_provider=None):
         },
         {
             "step": "9. Generate Report",
-            "tool": "Markdown Report Generator",
-            "description": "Combine rule-based analysis and optional AI insights into a downloadable Markdown report.",
-            "output": "Final data analysis report."
+            "tool": "Report Generator",
+            "description": "Combine rule-based analysis and optional AI insights into downloadable Markdown and Word reports.",
+            "output": "Final data analysis reports."
         }
     ]

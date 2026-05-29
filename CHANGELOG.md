@@ -1,5 +1,16 @@
 # Changelog
 
+## V2.2 - Word Report Export
+
+### Added
+- Added Word `.docx` report export support.
+- Added a report_export module for converting generated Markdown reports into Word documents.
+- Added a Word report download button in the Streamlit app.
+- Added python-docx as a project dependency.
+
+### Changed
+- Updated README to describe Markdown and Word report export support.
+
 ## V2.1 - Modular Project Structure
 
 ### Changed

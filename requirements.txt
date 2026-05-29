@@ -9,3 +9,4 @@ openai
 python-dotenv
 google-genai
 openpyxl
+python-docx

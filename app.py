@@ -14,6 +14,7 @@ from modules.data_quality import calculate_data_quality_score
 from modules.ml_task import suggest_ml_task
 from modules.ml_trainer import create_model_download_bytes, train_baseline_model
 from modules.prediction import create_prediction_input, make_single_prediction
+from modules.report_export import create_docx_report_bytes
 from modules.report_generator import generate_markdown_report
 from modules.workflow import get_agent_workflow_steps
 
@@ -403,6 +404,13 @@ if uploaded_file is not None:
             data=report,
             file_name="data_analysis_report.md",
             mime="text/markdown"
+        )
+
+        st.download_button(
+            label="Download Report as Word (.docx)",
+            data=create_docx_report_bytes(report),
+            file_name="ai_data_analysis_ml_report.docx",
+            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         )
 
     except Exception as e:
