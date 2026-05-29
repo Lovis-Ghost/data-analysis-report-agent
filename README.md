@@ -1,8 +1,6 @@
 # AI Data Analysis & ML Agent
 
-A Streamlit-based assistant for CSV and Excel dataset analysis, data quality checks,
-AI-assisted insights, baseline machine learning training, model download, prediction
-demo, and Markdown report generation.
+An end-to-end Streamlit application for CSV and Excel dataset analysis, data quality checking, AI-assisted insight generation, baseline machine learning training, model download, prediction demo, and Markdown report generation.
 
 ## Live Demo
 
@@ -10,98 +8,134 @@ demo, and Markdown report generation.
 
 ## Project Overview
 
-AI Data Analysis & ML Agent is designed to help users quickly understand a dataset
-without manually writing repeated exploratory data analysis code.
+**AI Data Analysis & ML Agent** helps users quickly understand a dataset and complete a first-pass machine learning workflow without manually writing repeated exploratory data analysis code.
 
-Users can upload a CSV or Excel `.xlsx` file, and the application will automatically
-generate dataset summaries, missing value checks, duplicate row checks, descriptive
-statistics, visualizations, machine learning task suggestions, baseline model training,
-model download, prediction demos, and Markdown reports.
+Users can upload a CSV or Excel file and the app will automatically generate dataset summaries, data quality checks, visualizations, machine learning task suggestions, baseline model training results, a downloadable model, a prediction demo, and a structured Markdown report.
 
-This project demonstrates practical skills in Python, data analysis automation, Streamlit
-web development, and basic AI-agent-style workflow design.
+This project is designed as a portfolio project for AI Agent, Machine Learning, Data Analyst, and Data Science internship applications.
 
-## Demo Screenshots
+## End-to-End Workflow
 
-### Agent Workflow
+```text
+Upload CSV or Excel dataset
+→ Profile dataset
+→ Check data quality
+→ Suggest machine learning task
+→ Train baseline models
+→ Compare model metrics
+→ Download the best model
+→ Try a single-sample prediction
+→ Generate a Markdown report
+```
 
-![Agent Workflow](assets/screenshots/agent_workflow.png)
+## Key Features
 
-### Dataset Upload and Preview
+### Data Analysis
 
-![Dataset Upload and Preview](assets/screenshots/dataset_upload_preview.png)
+- Upload CSV or Excel `.xlsx` datasets
+- Select a specific Excel sheet for analysis
+- Preview dataset records
+- Display dataset shape and column information
+- Automatically detect numerical, categorical, and ID-like columns
+- Check missing values and duplicate rows
+- Calculate a data quality score
+- Generate beginner-friendly data cleaning suggestions
+- Create numerical and categorical visualizations
+- Show correlation analysis for suitable numerical columns
 
-### AI Generated Insights
+### AI-Assisted Insights
 
-![AI Generated Insights](assets/screenshots/ai_generated_insights.png)
+- Generate optional AI-assisted insights using OpenAI or Gemini
+- Use fallback from OpenAI to Gemini when available
+- Send only compact summary information instead of the full dataset
+- Add AI-generated insights to the Markdown report when generated
 
-### Generated Report and Download
+### Machine Learning
 
-![Generated Report and Download](assets/screenshots/generated_report_download.png)
+- Choose a target column
+- Automatically suggest a suitable machine learning task type
+- Support regression, binary classification, and multi-class classification suggestions
+- Train baseline classification and regression models
+- Compare evaluation metrics across baseline models
+- Show confusion matrix for classification tasks
+- Select the best baseline model automatically
 
-## Features
+### Model Download and Prediction Demo
 
-* Upload CSV or Excel datasets
-* Select Excel sheet for analysis
-* Preview dataset records
-* Display dataset shape and column information
-* Explain the agent-style workflow with tool-like analysis steps
-* Check missing values and duplicate rows
-* Calculate a data quality score
-* Give automatic data cleaning suggestions
-* Automatically detect numerical, categorical, and ID-like columns
-* Exclude ID-like columns from unsuitable visualizations
-* Treat binary numerical columns as categorical features
-* Generate numerical column visualizations
-* Generate categorical column visualizations
-* Show correlation analysis for suitable numerical columns
-* Optionally generate AI-assisted insights with OpenAI or Gemini
-* Use multi-provider LLM fallback from OpenAI to Gemini
-* Train baseline classification and regression models
-* Compare baseline model evaluation metrics
-* Show confusion matrix for classification tasks
-* Add model training results to the Markdown report
-* Download the best trained baseline model as a `.pkl` file
-* Save preprocessing steps and trained model together using an sklearn Pipeline
-* Enter a new sample and generate a prediction using the best baseline model
-* Display class probabilities when the trained classification model supports probability prediction
-* Suggest suitable machine learning task types:
+- Download the best trained baseline model as a `.pkl` file
+- Save preprocessing steps and the trained model together as an sklearn Pipeline
+- Enter a new sample and generate a prediction using the best baseline model
+- Display class probabilities when the classification model supports probability prediction
 
-  * Regression
-  * Binary classification
-  * Multi-class classification
-* Recommend suitable machine learning models and evaluation metrics
-* Generate and download an improved Markdown data analysis report
+### Report Generation
 
-## Tech Stack
-
-* Python
-* Streamlit
-* pandas
-* NumPy
-* matplotlib
-* scikit-learn
-* tabulate
-* OpenAI API
-* Gemini API
-* python-dotenv
+- Generate a structured Markdown data analysis report
+- Include dataset overview, missing value summary, data quality assessment, machine learning task suggestion, model training results, AI insights, and suggested next steps
+- Download the final report as a Markdown file
 
 ## Agent Workflow
 
-The app follows a tool-based analysis workflow. Each step processes the dataset and passes
-useful information to the next step, similar to how an AI data analyst agent would work.
+The app follows a tool-based agent workflow. Each component processes part of the dataset and passes useful information to the next step.
 
-The workflow includes:
+| Step | Component | Output |
+|---|---|---|
+| 1 | Dataset Reader | Loaded CSV or Excel dataset |
+| 2 | Data Type Converter | Prepared dataframe |
+| 3 | Column Type Detector | Numerical, categorical, and ID-like columns |
+| 4 | Data Quality Scorer | Quality score and cleaning suggestions |
+| 5 | Correlation Analyzer | Correlation summary |
+| 6 | ML Task Recommender | Suggested task type, models, and metrics |
+| 7 | Baseline Model Trainer | Model comparison and best baseline model |
+| 8 | Model Exporter | Downloadable sklearn Pipeline package |
+| 9 | Prediction Demo | Single-sample prediction and probabilities |
+| 10 | LLM Insight Generator | Optional AI-generated insights |
+| 11 | Markdown Report Generator | Final downloadable report |
 
-* Dataset Reader
-* Data Type Converter
-* Column Type Detector
-* Data Quality Scorer
-* Correlation Analyzer
-* ML Task Recommender
-* Baseline Model Trainer
-* LLM Insight Generator
-* Markdown Report Generator
+## Portfolio Highlights
+
+| Skill Area | Evidence in This Project |
+|---|---|
+| Python | Uses pandas, NumPy, matplotlib, scikit-learn, and joblib |
+| Data Analysis | Automates profiling, missing value checks, duplicate checks, and summaries |
+| Machine Learning | Builds baseline classification and regression pipelines |
+| Model Evaluation | Compares classification and regression metrics |
+| ML Engineering | Saves preprocessing and model steps together as a reusable Pipeline |
+| AI Agent Design | Organizes analysis into a step-by-step tool-style workflow |
+| LLM Integration | Supports optional OpenAI and Gemini insights |
+| Web App Development | Provides an interactive Streamlit interface and live deployment |
+| Reporting | Generates a downloadable Markdown report |
+
+## Tech Stack
+
+- Python
+- Streamlit
+- pandas
+- NumPy
+- matplotlib
+- scikit-learn
+- joblib
+- tabulate
+- OpenAI API
+- Gemini API
+- python-dotenv
+- openpyxl
+
+## How to Use the App
+
+1. Open the Streamlit demo.
+2. Upload a CSV or Excel dataset.
+3. Review the dataset preview, column information, and data quality results.
+4. Select a target column for machine learning task suggestion.
+5. Train baseline models and compare evaluation metrics.
+6. Download the best trained baseline model if needed.
+7. Use the prediction demo to test one new sample.
+8. Download the generated Markdown report.
+
+## Example Use Case
+
+For a customer churn dataset, the app can detect that the target column `Churn` is suitable for binary classification.
+
+It can then train baseline models, compare evaluation metrics, show a confusion matrix, export the best trained pipeline, predict whether a new customer is likely to churn, and generate a Markdown report summarizing the analysis.
 
 ## Project Structure
 
@@ -116,7 +150,7 @@ data-analysis-report-agent/
     └── screenshots/
 ```
 
-## How to Run the Project
+## How to Run Locally
 
 ### 1. Clone the repository
 
@@ -125,7 +159,7 @@ git clone https://github.com/Lovis-Ghost/data-analysis-report-agent.git
 cd data-analysis-report-agent
 ```
 
-### 2. Create a virtual environment
+### 2. Create and activate a virtual environment
 
 ```bash
 python3 -m venv venv
@@ -138,64 +172,34 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Optional: enable AI insights
+### 4. Optional AI insights
 
-Create a `.env` file or set environment variables named `OPENAI_API_KEY` and
-`GEMINI_API_KEY`. If no API key is available, the app still runs normally with the
-rule-based analysis.
+AI insights are optional. Add OpenAI or Gemini credentials through environment variables or Streamlit secrets if you want to enable the AI Insight Generator.
 
-```bash
-OPENAI_API_KEY=your_openai_api_key_here
-GEMINI_API_KEY=your_gemini_api_key_here
-```
+If no credentials are provided, the app still works normally with rule-based analysis, baseline model training, model download, prediction demo, and Markdown report generation.
 
-The AI Insight Generator tries OpenAI first and can fall back to Gemini if OpenAI has a
-quota, billing, or API issue. It sends only compact summary information, such as column
-details, summary statistics, data quality notes, and machine learning suggestions. It does
-not send the full dataset.
-
-### 5. Run the Streamlit app
+### 5. Run the app
 
 ```bash
 streamlit run app.py
 ```
 
-## Example Use Case
-
-For a customer churn dataset, the agent can automatically detect that the target column
-`Churn` is suitable for a binary classification task.
-
-It then suggests possible models such as:
-
-* Logistic Regression
-* Decision Tree
-* Random Forest
-* XGBoost Classifier
-
-It also recommends suitable evaluation metrics such as:
-
-* Accuracy
-* Precision
-* Recall
-* F1-score
-* ROC-AUC
-
 ## Current Version
 
 ### V2.0 - Prediction Demo
 
-The current version supports automatic dataset analysis, smart column detection, data
-quality assessment, correlation analysis, machine learning task suggestion, baseline
-classification and regression model training, model download for the best baseline
-sklearn pipeline, a prediction demo using the trained baseline pipeline, an improved
-Markdown report, optional AI-generated insights with OpenAI or Gemini fallback, an
-agent workflow explanation, and CSV or Excel `.xlsx` file uploads.
+The current version supports automatic dataset analysis, smart column detection, data quality assessment, correlation analysis, machine learning task suggestion, baseline classification and regression model training, model download for the best baseline sklearn Pipeline, a prediction demo using the trained baseline Pipeline, an improved Markdown report, optional AI-generated insights with OpenAI or Gemini fallback, and CSV or Excel uploads.
 
 ## Future Improvements
 
-* Add PDF or Word report export
-* Add advanced model tuning
-* Add SHAP-based model explanation
+- Add PDF or Word report export
+- Add advanced model tuning
+- Add SHAP-based model explanation
+- Add final updated screenshots and example reports
+
+## Resume-Ready Project Summary
+
+**AI Data Analysis & ML Agent** — Built an end-to-end Streamlit application that automates dataset profiling, data quality assessment, AI-assisted insight generation, baseline machine learning training, model evaluation, model download, single-sample prediction, and Markdown report generation for CSV and Excel datasets.
 
 ## Author
 
