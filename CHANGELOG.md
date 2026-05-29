@@ -1,5 +1,13 @@
 # Changelog
 
+## V2.0.2 - README Portfolio Polish
+
+### Changed
+- Rewrote the README for internship portfolio presentation.
+- Added an end-to-end workflow summary.
+- Added clearer feature groups for data analysis, AI insights, machine learning, model download, prediction demo, and report generation.
+- Added portfolio highlights and a resume-ready project summary.
+
 ## V2.0.1 - Project Rename and Branding Update
 
 ### Changed
@@ -91,7 +99,7 @@
 - Added automatic data quality suggestions for beginner-friendly cleaning guidance.
 - Added correlation matrix analysis and a simple heatmap for suitable numerical columns.
 - Added top 3 strongest correlation summary.
-- Improved the downloaded Markdown report with data quality, machine learning, and correlation insights.
+- Improved the downloaded report with data quality, machine learning, and correlation insights.
 
 ### Fixed
 - Fixed the target-column edge case so the app does not use `task_info` when no suitable target column exists.
