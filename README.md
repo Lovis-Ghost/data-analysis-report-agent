@@ -28,6 +28,32 @@ Upload CSV or Excel dataset
 → Generate a Markdown report
 ```
 
+## System Architecture
+
+```mermaid
+flowchart TD
+    A[User] --> B[Streamlit Web App]
+    B --> C[Dataset Reader]
+    C --> D[Data Profiling and Column Detection]
+    D --> E[Data Quality Scorer]
+    D --> F[Correlation Analyzer]
+    D --> G[ML Task Recommender]
+    G --> H[Baseline Model Trainer]
+    H --> I[Model Evaluation]
+    H --> J[Model Exporter]
+    H --> K[Prediction Demo]
+    E --> L[Report Generator]
+    F --> L
+    G --> L
+    I --> L
+    D --> M[Compact Data Summary]
+    M --> N[OpenAI or Gemini Insight Generator]
+    N --> O[AI Insights]
+    O --> L
+    L --> P[Markdown Report]
+    L --> Q[Word Report]
+```
+
 ## Key Features
 
 ### Data Analysis
@@ -104,6 +130,19 @@ The app follows a tool-based agent workflow. Each component processes part of th
 | LLM Integration | Supports optional OpenAI and Gemini insights |
 | Web App Development | Provides an interactive Streamlit interface and live deployment |
 | Reporting | Generates downloadable Markdown and Word reports |
+
+## Planned Screenshots
+
+Final screenshots will be added after the UI is stable. The planned screenshots are:
+
+- [ ] Agent workflow overview
+- [ ] Dataset upload and preview
+- [ ] Data quality assessment
+- [ ] AI-generated insights
+- [ ] Baseline model training results
+- [ ] Model download
+- [ ] Prediction demo
+- [ ] Markdown and Word report download
 
 ## Tech Stack
 
@@ -212,11 +251,11 @@ streamlit run app.py
 
 ## Current Version
 
-### V2.3 - Example Dataset and Demo Outputs
+### V2.4A - Architecture Diagram and Screenshot Preparation
 
 The current version supports automatic dataset analysis, smart column detection, data quality assessment, correlation analysis, machine learning task suggestion, baseline classification and regression model training, model download for the best baseline sklearn Pipeline, a prediction demo using the trained baseline Pipeline, an improved Markdown report, optional AI-generated insights with OpenAI or Gemini fallback, and CSV or Excel uploads.
 
-The project now includes example files for testing and portfolio demonstration, including a synthetic churn dataset, an example Markdown report, an example prediction result, and demo testing steps.
+The project now includes a GitHub-rendered Mermaid system architecture diagram and screenshot preparation documentation for final portfolio presentation.
 
 ## Future Improvements
 

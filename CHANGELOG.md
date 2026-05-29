@@ -1,5 +1,15 @@
 # Changelog
 
+## V2.4A - Architecture Diagram and Screenshot Preparation
+
+### Added
+- Added a Mermaid system architecture diagram to README.
+- Added a planned screenshots checklist to README.
+- Added screenshot naming guidance under assets/screenshots/README.md.
+
+### Changed
+- Updated README project presentation for portfolio review.
+
 ## V2.3 - Example Dataset and Demo Outputs
 
 ### Added
