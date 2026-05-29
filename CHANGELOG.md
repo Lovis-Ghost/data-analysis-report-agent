@@ -1,5 +1,16 @@
 # Changelog
 
+## V2.5 - PDF Report Export
+
+### Added
+- Added PDF report export support.
+- Added a PDF report download button in the Streamlit app.
+- Added ReportLab as a project dependency.
+- Extended the report_export module to support Markdown, Word, and PDF report downloads.
+
+### Changed
+- Updated README to describe Markdown, Word, and PDF report export support.
+
 ## V2.4B - Final Screenshots Added
 
 ### Added

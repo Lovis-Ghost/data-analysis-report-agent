@@ -127,6 +127,7 @@ flowchart TD
 
 - Generate and download a Markdown report
 - Generate and download a Word `.docx` report
+- Generate and download a PDF report
 - Include dataset overview, missing value summary, data quality assessment, machine learning task suggestion, model training results, AI insights, and suggested next steps
 
 ## Agent Workflow
@@ -145,7 +146,7 @@ The app follows a tool-based agent workflow. Each component processes part of th
 | 8 | Model Exporter | Downloadable sklearn Pipeline package |
 | 9 | Prediction Demo | Single-sample prediction and probabilities |
 | 10 | LLM Insight Generator | Optional AI-generated insights |
-| 11 | Report Generator | Final downloadable Markdown and Word reports |
+| 11 | Report Generator | Final downloadable Markdown, Word, and PDF reports |
 
 ## Portfolio Highlights
 
@@ -159,7 +160,7 @@ The app follows a tool-based agent workflow. Each component processes part of th
 | AI Agent Design | Organizes analysis into a step-by-step tool-style workflow |
 | LLM Integration | Supports optional OpenAI and Gemini insights |
 | Web App Development | Provides an interactive Streamlit interface and live deployment |
-| Reporting | Generates downloadable Markdown and Word reports |
+| Reporting | Generates downloadable Markdown, Word, and PDF reports |
 
 ## Tech Stack
 
@@ -176,6 +177,7 @@ The app follows a tool-based agent workflow. Each component processes part of th
 - python-dotenv
 - openpyxl
 - python-docx
+- ReportLab
 
 ## Example Files
 
@@ -193,13 +195,13 @@ The app follows a tool-based agent workflow. Each component processes part of th
 5. Train baseline models and compare evaluation metrics.
 6. Download the best trained baseline model if needed.
 7. Use the prediction demo to test one new sample.
-8. Download the generated Markdown or Word report.
+8. Download the generated Markdown, Word, or PDF report.
 
 ## Example Use Case
 
 For a customer churn dataset, the app can detect that the target column `Churn` is suitable for binary classification.
 
-It can then train baseline models, compare evaluation metrics, show a confusion matrix, export the best trained pipeline, predict whether a new customer is likely to churn, and generate Markdown or Word reports summarizing the analysis.
+It can then train baseline models, compare evaluation metrics, show a confusion matrix, export the best trained pipeline, predict whether a new customer is likely to churn, and generate Markdown, Word, or PDF reports summarizing the analysis.
 
 ## Project Structure
 
@@ -268,22 +270,21 @@ streamlit run app.py
 
 ## Current Version
 
-### V2.4B - Final Screenshots Added
+### V2.5 - PDF Report Export
 
 The current version supports automatic dataset analysis, smart column detection, data quality assessment, correlation analysis, machine learning task suggestion, baseline classification and regression model training, model download for the best baseline sklearn Pipeline, a prediction demo using the trained baseline Pipeline, an improved Markdown report, optional AI-generated insights with OpenAI or Gemini fallback, and CSV or Excel uploads.
 
-The project now includes final screenshots in the README for portfolio presentation and replaces screenshot planning notes with real UI screenshots.
+The project now supports PDF report export in addition to Markdown and Word report export.
 
 ## Future Improvements
 
-- Add PDF report export
 - Add advanced model tuning
 - Add SHAP-based model explanation
-- Add more example reports
+- Keep screenshots updated when the UI changes
 
 ## Resume-Ready Project Summary
 
-**AI Data Analysis & ML Agent** — Built an end-to-end Streamlit application that automates dataset profiling, data quality assessment, AI-assisted insight generation, baseline machine learning training, model evaluation, model download, single-sample prediction, and Markdown/Word report generation for CSV and Excel datasets.
+**AI Data Analysis & ML Agent** — Built an end-to-end Streamlit application that automates dataset profiling, data quality assessment, AI-assisted insight generation, baseline machine learning training, model evaluation, model download, single-sample prediction, and Markdown/Word/PDF report generation for CSV and Excel datasets.
 
 ## Author
 
