@@ -1,0 +1,41 @@
+customerID,gender,SeniorCitizen,Partner,Dependents,tenure,PhoneService,InternetService,Contract,MonthlyCharges,TotalCharges,Churn
+CUST-0001,Female,0,Yes,No,5,Yes,Fiber optic,Month-to-month,82.40,412.00,Yes
+CUST-0002,Male,0,No,No,18,Yes,DSL,One year,54.20,975.60,No
+CUST-0003,Female,1,No,No,2,Yes,Fiber optic,Month-to-month,91.30,182.60,Yes
+CUST-0004,Male,0,Yes,Yes,36,Yes,DSL,Two year,48.90,1760.40,No
+CUST-0005,Female,0,No,No,9,Yes,Fiber optic,Month-to-month,79.75,717.75,Yes
+CUST-0006,Male,1,Yes,No,42,Yes,Fiber optic,One year,88.10,3700.20,No
+CUST-0007,Female,0,Yes,Yes,60,Yes,No,Two year,24.80,1488.00,No
+CUST-0008,Male,0,No,No,1,No,DSL,Month-to-month,36.50,36.50,Yes
+CUST-0009,Female,0,Yes,No,27,Yes,DSL,One year,58.60,1582.20,No
+CUST-0010,Male,1,No,No,4,Yes,Fiber optic,Month-to-month,95.45,381.80,Yes
+CUST-0011,Female,0,No,Yes,22,Yes,DSL,Month-to-month,61.20,1346.40,No
+CUST-0012,Male,0,Yes,Yes,55,Yes,Fiber optic,Two year,86.25,4743.75,No
+CUST-0013,Female,1,No,No,7,Yes,Fiber optic,Month-to-month,99.90,699.30,Yes
+CUST-0014,Male,0,Yes,No,31,Yes,DSL,One year,52.75,1635.25,No
+CUST-0015,Female,0,No,No,3,Yes,Fiber optic,Month-to-month,84.35,253.05,Yes
+CUST-0016,Male,0,Yes,Yes,48,Yes,No,Two year,20.95,1005.60,No
+CUST-0017,Female,1,Yes,No,12,Yes,Fiber optic,Month-to-month,89.60,1075.20,Yes
+CUST-0018,Male,0,No,No,16,Yes,DSL,Month-to-month,57.40,918.40,No
+CUST-0019,Female,0,Yes,Yes,64,Yes,Fiber optic,Two year,82.15,5257.60,No
+CUST-0020,Male,1,No,No,6,Yes,Fiber optic,Month-to-month,96.70,580.20,Yes
+CUST-0021,Female,0,No,No,14,Yes,DSL,Month-to-month,55.30,774.20,No
+CUST-0022,Male,0,Yes,No,40,Yes,Fiber optic,One year,79.10,3164.00,No
+CUST-0023,Female,1,No,No,8,Yes,Fiber optic,Month-to-month,101.20,809.60,Yes
+CUST-0024,Male,0,Yes,Yes,70,Yes,DSL,Two year,49.85,3489.50,No
+CUST-0025,Female,0,No,No,10,Yes,Fiber optic,Month-to-month,87.00,870.00,Yes
+CUST-0026,Male,0,No,Yes,28,Yes,DSL,One year,59.25,1659.00,No
+CUST-0027,Female,1,Yes,No,15,Yes,Fiber optic,Month-to-month,92.80,1392.00,Yes
+CUST-0028,Male,0,Yes,Yes,52,Yes,No,Two year,23.70,1232.40,No
+CUST-0029,Female,0,No,No,11,No,DSL,Month-to-month,39.80,437.80,Yes
+CUST-0030,Male,1,No,No,19,Yes,Fiber optic,Month-to-month,90.45,1718.55,Yes
+CUST-0031,Female,0,Yes,Yes,66,Yes,DSL,Two year,51.10,3372.60,No
+CUST-0032,Male,0,No,No,13,Yes,Fiber optic,Month-to-month,83.55,1086.15,Yes
+CUST-0033,Female,0,Yes,No,34,Yes,DSL,One year,56.80,1931.20,No
+CUST-0034,Male,1,No,No,5,Yes,Fiber optic,Month-to-month,98.25,491.25,Yes
+CUST-0035,Female,0,Yes,Yes,58,Yes,No,Two year,22.40,1299.20,No
+CUST-0036,Male,0,No,No,24,Yes,DSL,Month-to-month,60.15,1443.60,No
+CUST-0037,Female,1,No,No,9,Yes,Fiber optic,Month-to-month,94.75,852.75,Yes
+CUST-0038,Male,0,Yes,No,46,Yes,Fiber optic,One year,80.35,3696.10,No
+CUST-0039,Female,0,No,Yes,30,Yes,DSL,One year,53.45,1603.50,No
+CUST-0040,Male,1,No,No,2,Yes,Fiber optic,Month-to-month,102.65,205.30,Yes

@@ -1,5 +1,17 @@
 # Changelog
 
+## V2.3 - Example Dataset and Demo Outputs
+
+### Added
+- Added an examples folder for portfolio demonstration.
+- Added a synthetic customer churn sample dataset.
+- Added an example Markdown report.
+- Added an example prediction result document.
+- Added an example usage guide for testing the app workflow.
+
+### Changed
+- Updated README to include example files and demo testing instructions.
+
 ## V2.2 - Word Report Export
 
 ### Added

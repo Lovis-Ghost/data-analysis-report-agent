@@ -121,6 +121,13 @@ The app follows a tool-based agent workflow. Each component processes part of th
 - openpyxl
 - python-docx
 
+## Example Files
+
+- `examples/sample_churn.csv` can be used to test the full workflow.
+- `examples/example_markdown_report.md` shows an example generated report.
+- `examples/example_prediction_result.md` shows an example prediction output.
+- `examples/README.md` provides detailed demo testing steps.
+
 ## How to Use the App
 
 1. Open the Streamlit demo.
@@ -147,6 +154,11 @@ data-analysis-report-agent/
 ├── CHANGELOG.md
 ├── README.md
 ├── .gitignore
+├── examples/
+│   ├── README.md
+│   ├── sample_churn.csv
+│   ├── example_markdown_report.md
+│   └── example_prediction_result.md
 ├── modules/
 │   ├── __init__.py
 │   ├── workflow.py
@@ -200,11 +212,11 @@ streamlit run app.py
 
 ## Current Version
 
-### V2.2 - Word Report Export
+### V2.3 - Example Dataset and Demo Outputs
 
 The current version supports automatic dataset analysis, smart column detection, data quality assessment, correlation analysis, machine learning task suggestion, baseline classification and regression model training, model download for the best baseline sklearn Pipeline, a prediction demo using the trained baseline Pipeline, an improved Markdown report, optional AI-generated insights with OpenAI or Gemini fallback, and CSV or Excel uploads.
 
-The project now supports Word `.docx` report export in addition to Markdown report export. It also uses a cleaner module-based structure for data loading, column detection, data quality analysis, correlation analysis, AI insights, ML task suggestion, baseline model training, prediction, workflow description, and report generation.
+The project now includes example files for testing and portfolio demonstration, including a synthetic churn dataset, an example Markdown report, an example prediction result, and demo testing steps.
 
 ## Future Improvements
 
