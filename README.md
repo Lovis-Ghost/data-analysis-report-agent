@@ -146,6 +146,18 @@ data-analysis-report-agent/
 ├── CHANGELOG.md
 ├── README.md
 ├── .gitignore
+├── modules/
+│   ├── __init__.py
+│   ├── workflow.py
+│   ├── data_loader.py
+│   ├── column_detection.py
+│   ├── data_quality.py
+│   ├── correlation.py
+│   ├── ai_insights.py
+│   ├── ml_task.py
+│   ├── ml_trainer.py
+│   ├── prediction.py
+│   └── report_generator.py
 └── assets/
     └── screenshots/
 ```
@@ -186,9 +198,11 @@ streamlit run app.py
 
 ## Current Version
 
-### V2.0 - Prediction Demo
+### V2.1 - Modular Project Structure
 
 The current version supports automatic dataset analysis, smart column detection, data quality assessment, correlation analysis, machine learning task suggestion, baseline classification and regression model training, model download for the best baseline sklearn Pipeline, a prediction demo using the trained baseline Pipeline, an improved Markdown report, optional AI-generated insights with OpenAI or Gemini fallback, and CSV or Excel uploads.
+
+The project now uses a cleaner module-based structure for data loading, column detection, data quality analysis, correlation analysis, AI insights, ML task suggestion, baseline model training, prediction, workflow description, and report generation.
 
 ## Future Improvements
 
